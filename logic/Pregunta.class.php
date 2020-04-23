@@ -8,6 +8,10 @@ class Pregunta extends Conexion {
     private $Nombre_pregunta;
     private $Respuesta;
     private $Prueba_id;
+    private $Alternativa1;
+    private $Alternativa2;
+    private $Alternativa3;
+    private $Alternativa4;
 
     public function getPregunta_id() {
         return $this->Pregunta_id;
@@ -23,6 +27,18 @@ class Pregunta extends Conexion {
 
     public function getPrueba_id() {
         return $this->Prueba_id;
+    }
+    public function getAlternativa1() {
+        return $this->Alternativa1;
+    }
+    public function getAlternativa2() {
+        return $this->Alternativa2;
+    }
+    public function getAlternativa3() {
+        return $this->Alternativa3;
+    }
+    public function getAlternativa4() {
+        return $this->Alternativa4;
     }
 
     public function setPregunta_id($Pregunta_id) {
@@ -41,15 +57,34 @@ class Pregunta extends Conexion {
         $this->Prueba_id = $Prueba_id;
     }
 
+    public function setAlternativa1($Alternativa1) {
+        $this->Alternativa1 = $Alternativa1;
+    }
+
+    public function setAlternativa2($Alternativa2) {
+        $this->Alternativa2 = $Alternativa2;
+    }
+
+    public function setAlternativa3($Alternativa3) {
+        $this->Alternativa3 = $Alternativa3;
+    }
+
+    public function setAlternativa4($Alternativa4) {
+        $this->Alternativa4 = $Alternativa4;
+    }
+
     public function listar() {
         try {
             $sql = "
                     select 
-                        r.pregunta_id,
                         r.nombre_pregunta,
+                        r.alternativa1,
+                        r.alternativa2,
+                        r.alternativa3,
+                        r.alternativa4,
                         r.respuesta,
-                        p.prueba_id,
-                        c.nombre_curso
+                        c.nombre_curso,
+                        r.pregunta_id
                     from 
                         curso c inner join prueba p
                     on
@@ -88,13 +123,21 @@ class Pregunta extends Conexion {
                                                 pregunta_id,
                                                 nombre_pregunta,
                                                 respuesta,
-                                                prueba_id
+                                                prueba_id,
+                                                alternativa1,
+                                                alternativa2,
+                                                alternativa3,
+                                                alternativa4
                                                 )
                             values ( 
                                     :p_pregunta_id,
                                     :p_nombre_pregunta,
                                     :p_respuesta,
-                                    :p_prueba_id
+                                    :p_prueba_id,
+                                    :p_alternativa1,
+                                    :p_alternativa2,
+                                    :p_alternativa3,
+                                    :p_alternativa4
                                     );
 
                     ";
@@ -103,6 +146,10 @@ class Pregunta extends Conexion {
                 $sentencia->bindParam(":p_nombre_pregunta", $this->getNombre_pregunta());
                 $sentencia->bindParam(":p_respuesta", $this->getRespuesta());
                 $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+                $sentencia->bindParam(":p_alternativa1", $this->getAlternativa1());
+                $sentencia->bindParam(":p_alternativa2", $this->getAlternativa2());
+                $sentencia->bindParam(":p_alternativa3", $this->getAlternativa3());
+                $sentencia->bindParam(":p_alternativa4", $this->getAlternativa4());
                 $sentencia->execute();
                 /* Insertar en la tabla laboratorio */
 
@@ -156,7 +203,11 @@ class Pregunta extends Conexion {
                     set 
                         nombre_pregunta = :p_nombre_pregunta,
                         respuesta = :p_respuesta,
-                        prueba_id = :p_prueba_id
+                        prueba_id = :p_prueba_id,
+                        alternativa1 = :p_alternativa1,
+                        alternativa2 = :p_alternativa2,
+                        alternativa3 = :p_alternativa3,
+                        alternativa4 = :p_alternativa4
                     where
                         pregunta_id = :p_pregunta_id;
 
@@ -166,6 +217,10 @@ class Pregunta extends Conexion {
             $sentencia->bindParam(":p_nombre_pregunta", $this->getNombre_pregunta());
             $sentencia->bindParam(":p_respuesta", $this->getRespuesta());
             $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+            $sentencia->bindParam(":p_alternativa1", $this->getAlternativa1());
+            $sentencia->bindParam(":p_alternativa2", $this->getAlternativa2());
+            $sentencia->bindParam(":p_alternativa3", $this->getAlternativa3());
+            $sentencia->bindParam(":p_alternativa4", $this->getAlternativa4());
             $sentencia->execute();
             return true;
         } catch (Exception $exc) {

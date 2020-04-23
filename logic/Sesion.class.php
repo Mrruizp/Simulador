@@ -32,8 +32,6 @@ class Sesion extends Conexion {
                             u.apellidos,
                             u.direccion,
                             u.telefono,
-                            u.sexo,
-                            u.edad,
                             r.clave,                            
                             r.estado,
                             r.codigo_usuario,                           

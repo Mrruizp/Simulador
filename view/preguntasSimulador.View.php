@@ -13,7 +13,7 @@ require_once 'validar.datos.sesion.view.php';
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
-        <title> Campus Virtual | Simulador - Preguntas</title>
+        <title>Simulador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
@@ -47,7 +47,7 @@ require_once 'validar.datos.sesion.view.php';
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <div class="box box-primary">
                                 
                                 <div class="box-body">
@@ -99,7 +99,7 @@ require_once 'validar.datos.sesion.view.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="box box-primary">
                                 
                                 <div class="box-body">
@@ -145,7 +145,7 @@ require_once 'validar.datos.sesion.view.php';
                                     
                                     <div class="row text-center">
                                         <div class="col-md-12">
-                                            <!--<input type="text" name="codigo_idS" id="codigo_idS" value="<?php echo $codigo_curso; ?>">-->
+
                                             <br/>
                                             <h2 class="text-yellow"> 
                                                 MIS RESPUESTAS
@@ -213,36 +213,7 @@ require_once 'validar.datos.sesion.view.php';
         </div>
         <!-- ./wrapper -->
         <?php include_once 'scripts.view.php'; ?>
-        <script>
-            $(function () {
-
-                // We can attach the `fileselect` event to all file inputs on the page
-                $(document).on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                });
-
-                // We can watch for our custom `fileselect` event like this
-                $(document).ready(function () {
-                    $(':file').on('fileselect', function (event, numFiles, label) {
-
-                        var input = $(this).parents('.input-group').find(':text'),
-                                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-                        if (input.length) {
-                            input.val(log);
-                        } else {
-                            if (log)
-                                alert(log);
-                        }
-
-                    });
-                });
-
-            });
-        </script>    
+          
        <script src="js/preguntasSimulador.js" type="text/javascript"></script>
        <script src="js/cbCodigo.js" type="text/javascript"></script>
        <!--

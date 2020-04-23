@@ -76,3 +76,40 @@
     }
 
 </script>
+
+<script>
+            function mostrar(id) {
+
+                if (id == "alternativa1") {
+                    $("#alternativa1").show();
+                    $("#alternativa2").hide();
+                    $("#alternativa3").hide();
+                    $("#alternativa4").hide();
+                }   
+                if (id == "alternativa2") {
+                    $("#alternativa1").show();
+                    $("#alternativa2").show();
+                    $("#alternativa3").hide();
+                    $("#alternativa4").hide();
+                }    
+                if (id == "alternativa3") {
+                    $("#alternativa1").show();
+                    $("#alternativa2").show();
+                    $("#alternativa3").show();
+                    $("#alternativa4").hide();
+                }    
+                if (id == "alternativa4") {
+                    $("#alternativa1").show();
+                    $("#alternativa2").show();
+                    $("#alternativa3").show();
+                    $("#alternativa4").show();
+                }
+                if (id == "0") {
+                    $("#alternativa1").hide();
+                    $("#alternativa2").hide();
+                    $("#alternativa3").hide();
+                    $("#alternativa4").hide();
+                }             
+
+            }
+</script>

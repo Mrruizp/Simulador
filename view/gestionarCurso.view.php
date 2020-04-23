@@ -9,7 +9,7 @@ require_once 'validar.datos.sesion.view.php';
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
-        <title> Campus Virtual | Gestionar Anuncios</title>
+        <title>Simulador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
@@ -274,7 +274,7 @@ require_once 'validar.datos.sesion.view.php';
                     <small>
                         <form id="frmgrabarPregunta">
                             <div class="modal fade" id="myModalPregunta" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-md">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header bg-primary">
                                             <h4 class="modal-title" id="titulomodalPregunta">Registrar pregunta</h4>
@@ -291,9 +291,9 @@ require_once 'validar.datos.sesion.view.php';
                                                                       readonly="">
                                                     </p>
                                                 </div>
-                                                <div class="col-xs-6">
+                                                <div class="col-xs-4">
                                                     <p>
-                                                        Prueba
+                                                        <label class="control-label">Prueba</label>
                                                         <select size="1" style="font-weight:normal;" id="textPrueba_id" name="textPrueba_id" class="form-control has-feedback-left" required>
                                                             <option>-</option>
                                                             <option value="1">Agile Coach</option>
@@ -322,35 +322,91 @@ require_once 'validar.datos.sesion.view.php';
                                                             <option value="24">Design Thinking</option>
                                                             <option value="25">Service Desk</option>
                                                             <option value="26">Agile Business Owner</option>
-
+                                                        </select>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <p>
+                                                        <label class="control-label">Número de alternativas</label>
+                                                        <select style="font-weight:normal;" class="form-control has-feedback-left" id="status" name="status" onChange="mostrar(this.value);">
+                                                            <option value="0" SELECTED>Seleccionar una opción </option>
+                                                            <option value="alternativa1">1</option>
+                                                            <option value="alternativa2">2</option>
+                                                            <option value="alternativa3">3</option>
+                                                            <option value="alternativa4">4</option>
                                                         </select>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <div class="">
-                                                        <div class="box-header">
-                                                            <h3 class="box-title">Pregunta
-                                                                <small>Utilice el editor de texto</small>
-                                                            </h3>
-                                                            <!-- tools box -->
-                                                            
-                                                            <!-- /. tools -->
-                                                        </div>
+                                                    
                                                         <!-- /.box-header -->
                                                         <div class="box-body pad">
+                                                            <p>
+                                                                <label class="control-label">Pregunta</label>
+                                                                <textarea id="editor1" 
+                                                                          name="editor1" 
+                                                                          class = "ckeditor" cols="10">
 
-                                                            <textarea id="editor1" 
-                                                                      name="editor1" 
-                                                                      class = "ckeditor">
-
-                                                            </textarea>
+                                                                </textarea>
+                                                            </label>
                                                         </div>
-                                                    </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="row">
+                                                <div class="col-xs-12" id="alternativa1" style="display: none;">
+                                                    <p>
+                                                        Alternativa 1
+                                                        <input type="text" 
+                                                                      name="textAlternativa1" 
+                                                                      id="textAlternativa1" 
+                                                                      class="form-control input-md">
+                                                    </p>
+                                                </div>  
+                                                <div class="col-xs-12" id="alternativa2" style="display: none;">
+                                                    <p>
+                                                        Alternativa 2
+                                                        <input type="text" 
+                                                                      name="textAlternativa2" 
+                                                                      id="textAlternativa2" 
+                                                                      class="form-control input-md">
+                                                    </p>
+                                                </div>                                     
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12" id="alternativa3" style="display: none;">
+                                                    <p>
+                                                        Alternativa 3
+                                                        <input type="text" 
+                                                                      name="textAlternativa3" 
+                                                                      id="textAlternativa3" 
+                                                                      class="form-control input-md">
+                                                    </p>
+                                                </div>  
+                                                <div class="col-xs-12" id="alternativa4" style="display: none;">
+                                                    <p>
+                                                        Alternativa 4
+                                                        <input type="text" 
+                                                                      name="textAlternativa4" 
+                                                                      id="textAlternativa4" 
+                                                                      class="form-control input-md">
+                                                    </p>
+                                                </div>                                     
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p>
+                                                        Respuesta
+                                                        <input type="text" 
+                                                                      name="txtRespuesta" 
+                                                                      id="txtRespuesta" 
+                                                                      class="form-control input-md">
+                                                    </p>
+                                                </div>                                     
+                                            </div>
+                                            <!--<div class="row">
                                                 <div class="col-xs-3">
                                                     <p>
                                                         Respuesta
@@ -364,7 +420,7 @@ require_once 'validar.datos.sesion.view.php';
                                                         </select>
                                                     </p>
                                                 </div>                                      
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-warning" aria-hidden="true"><i class="fa fa-save"></i> Grabar</button>
@@ -416,7 +472,8 @@ require_once 'validar.datos.sesion.view.php';
                 });
 
             });
-        </script>    
+        </script>   
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script> 
        <script src="js/gestionarCurso.js" type="text/javascript"></script>
        <script src="js/cbCodigo.js" type="text/javascript"></script>
        <!--

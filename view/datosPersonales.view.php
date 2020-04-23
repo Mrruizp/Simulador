@@ -16,7 +16,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
-        <title> Campus Virtual | Gestionar Datos Personales</title>
+        <title>Simulador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
@@ -38,13 +38,13 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
       <section class="content-header">
-            <h3>Datos Personales</h3>
+            <h3>MIS DATOS</h3>
             <ol class="breadcrumb">
                 <li><a href="menu.principal.view.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-                <li class="active">Datos Personales</li>
+                <li class="active">Mis Datos</li>
               <!--<li class="active">User profile</li>-->
             </ol>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="btnagregar"><i class="fa fa fa-pencil"> ACTUALIZAR</i></button>
+            
         </section>  
     <!-- Main content -->
     <section class="content">
@@ -52,7 +52,8 @@
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">Datos del usuario</h3>
+                      <!--<h3 class="box-title">Mis datos</h3>-->
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="btnagregar"><i class="fa fa fa-pencil"> ACTUALIZAR</i></button>
                     </div>
                     <form role="form" enctype="multipart/form-data" action="../controller/perfil.usuario.actualizar.datos.controller.php" method="post">
                     <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -60,23 +61,21 @@
                         <div class="modal-content">
                           <div class="modal-header bg-primary">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="titulomodal">ACTUALIZAR DATOS PERSONALES</h4>
+                            <h4 class="modal-title" id="titulomodal">ACTUALIZAR MIS DATOS</h4>
                           </div>
                           <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-xs-3">
                                                     <p>
                                                         <input type="hidden" value="" id="txtTipoOperacion" name="txtTipoOperacion">
-                                                        Código<input type="text" 
+                                                        <input type="hidden" 
                                                                       name="txtCodigo" 
                                                                       id="txtCodigo" 
                                                                       class="form-control input-sm"
                                                                       readonly="true">
                                                     </p>
-                                                </div>
-                                                <div class="col-xs-3">
                                                     <p>
-                                                        Documento (*) <input type="text" class="form-control has-feedback-left" style="font-weight:normal;"
+                                                        DNI (*) <input type="text" class="form-control has-feedback-left" style="font-weight:normal;"
                                                                        id="txtDoc_identidad" name="txtDoc_identidad" 
                                                                        required="" autofocus="" 
                                                                        maxlength="8" value="<?php echo $resultado["doc_id"];  ?>"
@@ -111,7 +110,7 @@
                                                         <input type="text" style="font-weight:normal;" id="txtTelefono" class="form-control" name="txtTelefono" required="" maxlength="20" onkeypress="ValidaSoloNumeros();" value="<?php echo $resultado["telefono"];  ?>">
                                                     </p>
                                                 </div>
-                                                <div class="col-xs-3">
+                                                <!--<div class="col-xs-3">
                                                     <p>
                                                         Sexo (*)
                                                         <select size="1" style="font-weight:normal;" id="sexo" name="sexo" class="form-control has-feedback-left" required=""> 
@@ -126,7 +125,7 @@
                                                             ?>
                                                         </select>
                                                     </p>
-                                                </div>
+                                                </div> 
                                                 <div class="col-xs-2">
                                                     <p>
                                                         Edad (*)
@@ -178,7 +177,7 @@
                                                             <option value="60">60</option>
                                                         </select>
                                                     </p>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                       <div class="modal-footer">
@@ -196,7 +195,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Doc ID</label>
+                                        <label for="exampleInputEmail1">DNI</label>
                                         <input type="text" class="form-control" name="txtDNI" id="txtDNI" value="<?php echo $resultado["doc_id"];  ?>" readonly="">
                                     </div>
                                 </div>
@@ -222,7 +221,7 @@
                                         <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" placeholder="Enter direccion" value="<?php echo $resultado["direccion"];  ?>" readonly="">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <!--<div class="col-md-2">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Edad</label>
                                         <select size="1" class="form-control" name="txtEdad" readonly=""> 
@@ -288,19 +287,20 @@
                                             ?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Teléfono</label>
-                                        <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" placeholder="Enter telefono" value="<?php echo $resultado["telefono"];  ?>" readonly="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                                </div>-->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Correo electónico</label>
                                         <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="Enter email" value="<?php echo $resultado["email"];  ?>" readonly="">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Teléfono</label>
+                                        <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" placeholder="Enter telefono" value="<?php echo $resultado["telefono"];  ?>" readonly="">
                                     </div>
                                 </div>
                                 

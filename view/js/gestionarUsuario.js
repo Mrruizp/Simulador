@@ -97,9 +97,6 @@ function leerDatos(codIdentidad) {
             $("#txtDireccion").val(jsonResultado.datos.direccion);
             $("#txtEmail").val(jsonResultado.datos.telefono);
             $("#txtTelefono").val(jsonResultado.datos.telefono);
-
-            $("#sexo").val(jsonResultado.datos.sexo);
-            $("#edad").val(jsonResultado.datos.edad);
             $("#txtEmail").val(jsonResultado.datos.email);
             $("#cargo").val(jsonResultado.datos.cargo_id);
             $("#contrasenia").val(jsonResultado.datos.clave);
@@ -184,8 +181,6 @@ $("#frmgrabar").submit(function (event) {
                                 p_direccion:   $("#txtDireccion").val(),
                                 p_email:       $("#txtEmail").val(),
                                 p_telefono:    $("#txtTelefono").val(),
-                                p_sexo:        $("#sexo").val(),
-                                p_edad:        $("#edad").val(),
                                 p_cargo:       $("#cargo").val(),
                                 p_contrasenia: $("#contrasenia").val(),
                                 p_tipo:        $("#tipo").val(),

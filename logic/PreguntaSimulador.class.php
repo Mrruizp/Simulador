@@ -20,7 +20,11 @@ class PreguntaSimulador extends Conexion {
                         pr.pregunta_id,
                         pr.nombre_pregunta,
                         pr.respuesta,
-                        pr.prueba_id
+                        pr.prueba_id,
+                        pr.alternativa1,
+                        pr.alternativa2,
+                        pr.alternativa3,
+                        pr.alternativa4
                     from 
                         pregunta pr left join respuesta_pregunta_usuario r
                     on
@@ -42,18 +46,31 @@ class PreguntaSimulador extends Conexion {
     public function listarMisRespuestas($codPrueba) {
         try {
             $sql = "select
-                        pr.pregunta_id,
+                       r.numpregunta,
                        r.respuesta_usuario
                     from 
-                        pregunta pr left join respuesta_pregunta_usuario r
+                        pregunta pr right join respuesta_pregunta_usuario r
                     on
                         pr.pregunta_id = r.pregunta_id
                     where
-                        prueba_id = $codPrueba and r.doc_id = '$_SESSION[s_doc_id]'
-                    order by pr.pregunta_id desc;";
+                        r.doc_id = '$_SESSION[s_doc_id]'
+                    order by r.numpregunta is null;";
+
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function listarObtenerCodPregunta($pregunta) {
+        try {
+            $sql = "select pregunta_id from pregunta where pregunta_id ~ '$pregunta';";
+            $sentencia = $this->dblink->prepare($sql);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
             return $resultado;
         } catch (Exception $exc) {
             throw $exc;
@@ -83,16 +100,16 @@ class PreguntaSimulador extends Conexion {
         }
     }
 
-    public function agregar($preg_respuesta, $cod_pregunta) {
+    public function agregar($preg_respuesta, $cod_pregunta, $numPregunta) {
         $this->dblink->beginTransaction();
 
         try {
                 $sql = "
                         select * from fn_RegistrarRespuestaUsuario
                                     (
-                                        
                                         '$preg_respuesta',
                                         $cod_pregunta,
+                                        '$numPregunta',
                                         '$_SESSION[s_doc_id]'
                                     )
 

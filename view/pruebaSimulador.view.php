@@ -11,7 +11,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
-        <title> Campus Virtual | Simulador</title>
+        <title>Simulador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
@@ -68,9 +68,11 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                         <div class="text-center col-xs-6">
                                                             
                                                                 <!--<input type="text" name="id" value="<?php echo $i; ?>">-->
-                                                                <label><img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image"></label>
-                                                                <a href="cursoContenidoSimulador.View.php?id=<?php echo $i; ?>"><button type="button" class="btn btn-primary btn-md">Entrar</button>
-                                                                <br/><br/>
+                                                                
+                                                                    <a href="cursoContenidoSimulador.View.php?id=<?php echo $i; ?>">    
+                                                                        <img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image">
+                                                                        <button type="button" class="btn btn-primary btn-md">Entrar</button>
+                                                                
                                                             </form>
                                                         </div>    
 
@@ -85,27 +87,23 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                         <div class="text-center col-xs-6">
                                                             
                                                                 <!--<input type="text" name="id" value="<?php echo $e; ?>">-->
-                                                                <label><img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image"></label>
-                                                                <a href="cursoContenidoSimulador.View.php?id=<?php echo $e; ?>"><button type="button" class="btn btn-primary btn-md">Entrar</button>
-                                                                <br/><br/>
+                                                           
+                                                                <a href="cursoContenidoSimulador.View.php?id=<?php echo $e; ?>">
+                                                                    
+                                                                    <img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image">
+                                                                
+                                                                <button type="button" class="btn btn-primary btn-md">Entrar</button>
+
+                                                                
                                                             </form>
                                                         </div>
-                                                    </div>
+                                                    </div><br/>
 
                                                 <?php
                                                         $i++;
                                                         }
                                                        }
-                                                ?>   
-                                               
-                                                <br/>
-                                                <section class="text-center"> 
-                                                    <header>
-                                                        <span class="section">
-
-                                                        </span>
-                                                    </header>
-                                                </section>    
+                                                ?>      
                                             </div>
                                         </div>
                                     </div>

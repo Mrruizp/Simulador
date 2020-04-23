@@ -1,8 +1,8 @@
 <?php
 
 try {
-    $email = $_POST["txtEmail"];
-    $clave = $_POST["txtClave"];
+    $email = $_POST["p_email"];
+    $clave = $_POST["p_clave"];
 
     require_once '../logic/Sesion.class.php';
     require_once '../util/functions/Helper.class.php';
@@ -19,27 +19,7 @@ try {
     $objSesion->setClave($clave);
 
     $resultado = $objSesion->iniciarSesion();
-
-    //echo $resultado;
-
-    switch ($resultado) {
-
-        case "CI": //Contraseña incorrecta
-            Helper::mensaje("La Contraseña es incorrecta", "e", "../view/index.php", 5);
-            break;
-        
-        case "IN": //usuario inactivo
-            Helper::mensaje("El usuario esta inactivo. Consulte con su administrador", "a", "../view/index.php", 5);
-            break;
-        
-        case "NE": //usuario no existe
-            Helper::mensaje("El usuario no existe", "e", "../view/index.php", 5);
-            break;
-//        Helper::mensaje("Usuario inactivo", "a", "../view/index.php", 3);
-        default:// SI
-                    header("location:../view/menu.principal.view.php");
-            break;
-    }
+    Helper::imprimeJSON(200, "", $resultado);
 
 } catch (Exception $exc) {
     echo $exc->getMessage();

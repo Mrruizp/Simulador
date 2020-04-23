@@ -1,3 +1,4 @@
+
 function getParameterByName(name) { // extraer el id por get
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -13,6 +14,84 @@ $(document).ready(function () {
     //listarPregunta(getParameterByName('id'));
     //listarPregunta();
 });
+$(function(){
+
+    //Aquí es donde te digo que le hablo al document, le ligo el evento, le digo que selectores y le paso lo que quiero que haga
+    $( document ).on( 'click', '.foo', function(){
+        var contador = document.getElementsByName("contador");
+        if( $( this.id ))
+        {
+           var numPregunta = $(this.id);
+        }
+        if( $( this.name ))
+        {
+           var cPreg = $(this.name);
+        }
+            var numeroPregunta = numPregunta.selector;
+            var codigo_pregunta = cPreg.selector;
+        var resp = $(this).val();
+       /* var val = document.getElementsByName("num2");//$('input:text[name=num2]').val();
+        
+        var valor = document.getElementsByName("num2")[selecto-1];
+        var codPreg1 = document.getElementsByName("num1")[selecto-1];
+        var codPreg2 = codPreg1.attributes[3].value;*/
+        //var pregunta1 = document.getElementsByName("num2")[val-1];
+        //var pregunta2 = $(pregunta1).val();
+        //var pregunta3 = pregunta1.attributes[4].value;
+        
+      //Revisa en que status está el checkbox y controlalo según lo //desees
+      if( $( this ).is( ':checked' ) ){
+        //obtenerCodPregunta(pregunta3, val);
+       // var codPregunta = $('input:text[name=codPreg]').val();
+        guardarMiRespuesta(resp, codigo_pregunta, numeroPregunta);
+      }
+      else{
+        resp = "falta";
+        //obtenerCodPregunta(pregunta3, val);
+       // var codPregunta = $('input:text[name=codPreg]').val();        
+        guardarMiRespuesta(resp, codigo_pregunta, numeroPregunta);
+      }
+    });
+
+});
+
+function obtenerCodPregunta(pregunta, val) {
+    $.post
+            (
+                    "../controller/obtenerCodigoPregunta.listar.controller.php",
+                    {
+                        p_pregunta: pregunta
+                    }
+
+                    ).done(function (resultado) {
+                        var pregID = 0;
+                        var datosJSON = resultado;
+
+                        if (datosJSON.estado === 200) {
+                            var html = "";
+                            
+                            $.each(datosJSON.datos, function (i, item) {
+                             
+                                html += '<input type="text" name="codPreg" id="codPreg" value="'+ item.pregunta_id +'">';
+                                pregID = item;
+                                //guardarMiRespuesta(pregunta, pregID);
+                                
+                            });
+
+
+
+
+                        } else {
+                            //swal("Mensaje del sistema", resultado , "warning");
+                        }
+                        
+                    }).fail(function (error) {
+                        var datosJSON = $.parseJSON(error.responseText);
+                        //swal("Error", datosJSON.mensaje , "error"); 
+                    });
+
+                    
+}
 
 function eliminarRespuestas(codPrueba) {
     $.post
@@ -54,12 +133,12 @@ function listarMisRespuestas(codPrueba) {
                             var html = "";
 
                             html += '<small>';
-                            html += '<table id="" class="table table-responsive table-bordered">';
+                            html += '<table id="tabla-listado" class="table table-responsive table-bordered">';
                             html += '<thead>';
                             html += '<tr style="background-color: #ededed; height:25px;">';
                             //html += '<th style="text-align:center">CODIGO</th>';
-                            html += '<th style="text-align:center"><b>PREGUNTA ID<b/></th>';
-                            html += '<th style="text-align:center"><b>MIS RESPUESTA<b/></th>';
+                            html += '<th style="text-align:center"><b>NÚMERO DE PREGUNTA<b/></th>';
+                            html += '<th style="text-align:center"><b>MI RESPUESTA<b/></th>';
                             //html += '<th style="text-align:center">RESPONDI</th>';
                             html += '</tr>';
                             html += '</thead>';
@@ -73,8 +152,13 @@ function listarMisRespuestas(codPrueba) {
                                     }
                                 });
                                 html += '<tr>';
-                                html += '<td align="center">' + item.pregunta_id + '</td>';
-                                html += '<td align="center">' + item.respuesta_usuario + '</td>';
+                                html += '<td align="center">' + item.numpregunta + '</td>';
+                                
+                                if(item.respuesta_usuario == "falta")
+                                    html += '<td align="center"><p class="text-danger">Sin responder</p></td>';
+                                else
+                                    html += '<td align="center">' + item.respuesta_usuario + '</td>';
+                                
                                 html += '</tr>';
                             });
 
@@ -86,7 +170,7 @@ function listarMisRespuestas(codPrueba) {
 
 
                             $('#tabla-listadoMisRespuestas').dataTable({
-                                "aaSorting": [[1, "asc"]]
+                                "aaSorting": [[1, "des"]]
                             });
 
 
@@ -113,46 +197,69 @@ function listarPregunta(codigo_curso) {
 
                     ).done(function (resultado) {
                         var datosJSON = resultado;
-                        var cont = 0;
+                        
 
                         if (datosJSON.estado === 200) {
                             var html = "";
-
+                            var cont = 0;
                             html += '<small>';
                             html += '<table id="tabla-listado" class="table table-responsive table-bordered">';
                             html += '<thead>';
                             html += '<tr style="background-color: #ededed; height:25px;">';
-                            html += '<th style="text-align:center">ID</th>';
-                            html += '<th style="text-align:center"><h3><b>PREGUNTA<b/></h3></th>';
-                            html += '<th style="text-align:center"><h3><b>GRABAR<b/></h3></th>';
+                            html += '<th style="text-align:center"></th>';
+                            html += '<th style="text-align:center"><h3><b><b/></h3></th>';
+                            html += '<th style="text-align:center"><h3><b><b/></h3></th>';
                             //html += '<th style="text-align:center">RESPONDI</th>';
                             html += '</tr>';
                             html += '</thead>';
                             html += '<tbody>';
                             $.each(datosJSON.datos, function (i, item) {
+                            
                                 $('.timer').timer({
                                     duration: '60m',
                                     countdown: true,
                                     callback: function () {
-                                        //location.href = "../view/resultadoSimulador.view.php?id="+$('#txtCodPrueba').val()+"";
                                         location.href = "../view/resultadoSimulador.view.php?id="+ item.prueba_id +"";
                                     }
                                 });
                                 html += '<tr>';
-                                html += '<td align="left" style="font-weight:normal">' + item.pregunta_id + '</td>';
+                                html += '<td align="center" style="font-weight:normal">' + (cont+=1) + '</td>';
                                 html += '<td align="left">' + item.nombre_pregunta + '</td>';
-                                html += '<td align="center">';
-                                html += '<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" onclick="leerDatos(' + item.pregunta_id + ')"><i class="fa fa-save"></i></button>';
+                                html += '<td align="left">';
+                                html += '   <div class="form-group">';
+                                html += '       <div class="checkbox">';
+                                html += '           <label>';
+                                                        if(item.alternativa1)
+                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo" value="' + item.alternativa1  + '">  '+ item.alternativa1 +'';                                               
+                                html += '           </label>';
+                                html += '       </div>';
+                                html += '   </div><br/>';
+                                html += '   <div class="form-group">';
+                                html += '       <div class="checkbox">';
+                                html += '           <label>';
+                                                        if(item.alternativa2)
+                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa2  + '">  '+ item.alternativa2 +'';
+                                html += '           </label>';
+                                html += '       </div>';
+                                html += '   </div><br/>';
+                                html += '   <div class="form-group">';
+                                html += '       <div class="checkbox">';
+                                html += '           <label>';
+                                                        if(item.alternativa3)
+                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa3  + '">  '+ item.alternativa3 +'';
+                                html += '           </label>';
+                                html += '       </div>';
+                                html += '   </div><br/>';
+                                html += '   <div class="form-group">';
+                                html += '       <div class="checkbox">';
+                                html += '           <label>';
+                                                    if(item.alternativa4)
+                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa4  + '">  '+ item.alternativa4 +'';
+                                html += '           </label>';
+                                html += '       </div>';
+                                html += '   </div>';
+                                html += '   </td>'; 
                                 html += '</td>';
-                               /* if( item.respuesta_usuario  != null )
-                                    html += '<td align="center">' + item.respuesta_usuario + '</td>';
-                                else
-                                    html += '<td align="center"></td>';
-                                if(item.respuesta_usuario === null && item.doc_id !== $_SESSION["s_doc_id"])
-                                    html += '<td align="center">-</td>';
-                                else
-                                    html += '<td align="center" style="color:blue";>Respondido</td>';
-                                */
                                 html += '</tr>';
                             });
 
@@ -164,7 +271,7 @@ function listarPregunta(codigo_curso) {
 
 
                             $('#tabla-listado').dataTable({
-                                "aaSorting": [[1, "asc"]]
+                              //  "aaSorting": [[1, "des"]]
                             });
 
 
@@ -203,7 +310,33 @@ function leerDatos(codPregunta) {
         swal("Error", datosJSON.mensaje, "error");
     });
 }
+function guardarMiRespuesta(miRespuesta, codPregunta, numeroPregunta) {
+    
+     $.post(
+                            "../controller/gestionarRespuestaPregunta.agregar.editar.controller.php",
+                            {
+                                p_respuesta: miRespuesta,
+                                p_cod_pregunta: codPregunta,
+                                p_numPregunta : numeroPregunta
+                            }
+                    ).done(function (resultado) {
+                        var datosJSON = resultado;
 
+                        if (datosJSON.estado === 200) {
+                            //swal("Exito", datosJSON.mensaje, "success");
+                            //$("#btncerrar").click(); //Cerrar la ventana 
+                            //listarPregunta(getParameterByName('id')); //actualizar la lista
+                            listarMisRespuestas(getParameterByName('id'));
+                        } else {
+                            swal("Mensaje del sistema", resultado, "warning");
+                        }
+
+                    }).fail(function (error) {
+                        var datosJSON = $.parseJSON(error.responseText);
+                        swal("Error", datosJSON.mensaje, "error");
+                    });
+}
+/*
 $("#frmgrabar").submit(function (event) {
     event.preventDefault();
 
@@ -259,7 +392,7 @@ $("#titulomodal").html("Agregar nuevo Respuesta");
 $("#myModal").on("shown.bs.modal", function () {
     $("#txtPuesto").focus();
 });
-
+*/
 $("#frmGrabarCalificarPrueba").submit(function (event) {
     event.preventDefault();
 

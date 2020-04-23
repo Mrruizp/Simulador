@@ -1,5 +1,5 @@
 <header class="main-header">    
-    <a href="menu.principal.view.php"class="logo">      
+    <a href="pruebaSimulador.view.php"class="logo">      
       <span class="logo-lg"><b><img src="../images/logo_blanco_IPEV.png" class="img-responsive center-block">   </span>
     </a>
     <nav class="navbar navbar-static-top">
@@ -10,6 +10,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
+      
+        <div class="col-md-10">
+          <div class="text-center">
+            <h4 style="color:#FFFFFF";>SIMULADOR</h4>
+          </div>
+        </div>
+     
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown messages-menu">
@@ -54,7 +61,7 @@
             </ul>
           </li>
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            <!--<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--><!-- simbolo de la configuracion de temas para el aplicativo-->
           </li>
         </ul>
       </div>

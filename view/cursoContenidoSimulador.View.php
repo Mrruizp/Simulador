@@ -12,7 +12,7 @@ require_once 'validar.datos.sesion.view.php';
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
-        <title> Campus Virtual | Gestionar Anuncios</title>
+        <title> Simulador</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
@@ -51,29 +51,7 @@ require_once 'validar.datos.sesion.view.php';
                                 
                                 <div class="box-body">
                                     <div>
-                                        <div id="img_curso" style="display:block;" class="text-center">
-                                            <h3 class="title text-left text-primary"><b>INICIO</b></h3>
-                                            <label><img src="fotos/anuncios/<?php echo $codigo_curso; ?>.jpg" class="img-thumbnail" alt="Responsive image"></label>
-                                        </div>
-                                        <div id="contenido" style="display:none;">
-                                            <h3 class="title text-left">GENERAL</h3>
-                                            <p style="font-size: 13px">
-                                                Somos una empresa peruana que brinda 
-                                                servicios de asesoramiento y ejecución de 
-                                                obras para los gobiernos municipales.
-                                                <br/><br/>
-                                                VICSAC fue fundada en 2008 en Chiclayo, 
-                                                Perú, y es una de las pocas empresas que 
-                                                gira bajo una filosofía de &quot;orden&quot; basado en 
-                                                un planemiento estratrégico empresarial. 
-                                                <br/><br/>
-                                                VICSAC es una empresa constructora muy joven 
-                                                que apuesta al desarrollo del Perú con un 
-                                                nivel de presición y transparencia en sus 
-                                                servicios.
-                                            </p>
-                                        </div>
-                                        <div id="simulador" style="display:none;">
+                                        <div id="simulador">
                                             <div class="row">
                                                 <div class="col-md-8 text-left">
                                                    
@@ -127,7 +105,7 @@ require_once 'validar.datos.sesion.view.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <!--<div class="col-md-3">
                             <div class="box box-primary">
                                 
                                 <div class="box-body">
@@ -142,7 +120,7 @@ require_once 'validar.datos.sesion.view.php';
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                         
                 </section>

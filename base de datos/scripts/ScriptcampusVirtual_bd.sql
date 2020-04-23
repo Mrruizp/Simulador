@@ -10,7 +10,7 @@ CREATE TABLE cargo
   CONSTRAINT pk_cargo PRIMARY KEY (cargo_id)
 );
 
-
+select * from usuario;
 
 CREATE TABLE USUARIO
 (
@@ -19,16 +19,16 @@ CREATE TABLE USUARIO
     apellidos character varying(50) not null,
 	direccion character varying(200) not null,
     telefono character varying(25) not null,
-    sexo char(1) not null, -- Mujer: 0, Hombre: 1 
-    edad char(2) not null,
+   -- sexo char(1) not null, -- Mujer: 0, Hombre: 1 
+   -- edad char(2) not null,
     email character varying(150) not null,
     cargo_id integer,
     constraint pk_usuario_doc_id primary key(doc_id),
     constraint fk_usuario_cargo_id foreign key(cargo_id) references cargo(cargo_id),
 	CONSTRAINT uni_email UNIQUE (email)
 );
--- alter table CREDENCIALES_ACCESO
--- drop column p_foto
+ -- alter table USUARIO
+ -- drop column edad
 
 -- select * from CREDENCIALES_ACCESO
 CREATE TABLE CREDENCIALES_ACCESO
@@ -100,7 +100,11 @@ CREATE TABLE PREGUNTA
 (
 	pregunta_id integer not null,
     nombre_pregunta character varying(12000) not null,
-    respuesta char(1) null,
+    alternativa1 character varying(500),
+	alternativa2 character varying(500),
+	alternativa3 character varying(500),
+	alternativa4 character varying(500),
+	respuesta character varying(500),
     prueba_id integer,
     constraint pk_pregunta_pregunta_id primary key(pregunta_id),
     constraint fk_pregunta_prueba_id foreign key(prueba_id) references prueba(prueba_id)
@@ -109,13 +113,14 @@ CREATE TABLE PREGUNTA
 CREATE TABLE RESPUESTA_PREGUNTA_USUARIO
 (
 	respuesta_pregunta_usuario_id integer not null,
-	respuesta_usuario char(1)not null,    
+	respuesta_usuario character varying(500)not null,   
     puntaje_correcto float,
 	estado character varying(100),
     pregunta_id int,
 	doc_id character varying(20)not null,
 	promedio_id int,
 	estadoCalificado char(2),
+	numPregunta character varying(3)not null,
     -- numero_pregunta character varying(5),
     constraint pk_respuesta_pregunta_usuario_id primary key(respuesta_pregunta_usuario_id),
     constraint fk_pregunta_id foreign key(pregunta_id) references pregunta(pregunta_id),
@@ -551,7 +556,7 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 					
 					p_codigo_usuario integer, p_doc_id character varying(20), p_nombres character varying(50),
 					p_apellidos character varying(50), p_direccion character varying(200), 
-	 				p_telefono character varying(25), p_sexo char(1), p_edad char(2), p_email character varying(150), 
+	 				p_telefono character varying(25), p_email character varying(150), 
 	 				p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1)
 					 )  RETURNS void AS   
  $$
@@ -560,12 +565,12 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 							insert into usuario
 									(
 										doc_id,nombres,apellidos,direccion,
-										telefono,sexo,edad, email,cargo_id
+										telefono, email,cargo_id
 									)
 							values
 								(
 									p_doc_id,p_nombres,p_apellidos,p_direccion,
-									p_telefono,p_sexo,p_edad,p_email,p_cargo_id
+									p_telefono,p_email,p_cargo_id
 								);
 
 
@@ -585,7 +590,7 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 									p_codigo_usuario integer, p_doc_id character varying(20), 
 									p_nombres character varying(50),p_apellidos character varying(50), 
 									p_direccion character varying(200),p_telefono character varying(25), 
-									p_sexo char(1), p_edad char(2), p_email character varying(150), 
+									p_email character varying(150), 
 									p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1)
  								)RETURNS void AS
  $$
@@ -600,8 +605,6 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 									apellidos = p_apellidos,
 									direccion = p_direccion,
 									telefono  = p_telefono,
-									sexo      = p_sexo,
-									edad      = p_edad,
 									email     = p_email,
 									cargo_id  = p_cargo_id
 								where 
@@ -789,8 +792,9 @@ select * from pregunta
 -- FUNCIÓN REGISTRAR O ACTUALIZA RESPUESTA Y VERIFICAR QUE SI LA RESPUESTA ES CORRECTA
 CREATE OR REPLACE FUNCTION fn_RegistrarRespuestaUsuario
 									(
-										p_respuesta_usuario char(1),
+										p_respuesta_usuario character varying(500),
 										p_pregunta_id integer,
+										p_numPregunta character varying(3),
 										p_doc_id character varying(20)
 									)returns void as
 
@@ -798,13 +802,14 @@ $$
 declare
 
 	p_valor integer;
-	p_respuesta_correcta char(1); -- respuesta de la pregunta
+	p_respuesta_correcta character varying(500); -- respuesta de la pregunta
 	-- p_respuesta_usuario char(1); -- respuesta del usuario
 	p_puntaje_correcto float;    -- si respuesta pregunta == respuesta usuario ----> 1
 	p_estado character varying(100); -- correcto - incorrecto
 	p_correlativo integer;
 	p_prueba_id integer;
 	p_descripcionn character varying(200);
+	-- p_numPregunta character varying(3);
 	
 	
 				
@@ -824,8 +829,9 @@ begin
 					and e.prueba_id = p_prueba_id or  r.respuesta_usuario is null;
 								
 				select prueba_id into p_prueba_id from pregunta where pregunta_id = p_pregunta_id;
-				select count(*) into p_valor from respuesta_pregunta_usuario where pregunta_id = p_pregunta_id;
+				select count(*) into p_valor from respuesta_pregunta_usuario where pregunta_id = p_pregunta_id and doc_id = p_doc_id;
 				select respuesta into p_respuesta_correcta from pregunta where pregunta_id = p_pregunta_id;
+				
 				
 				if p_descripcionn is null then
 						if p_respuesta_usuario = p_respuesta_correcta  then
@@ -848,14 +854,12 @@ begin
 							and
 								doc_id = p_doc_id;
 						else
-							insert into respuesta_pregunta_usuario
+							/*insert into respuesta_pregunta_usuario
 																	(
 																		respuesta_pregunta_usuario_id,
-																		respuesta_usuario,
-																		puntaje_correcto,
-																		estado,
-																		pregunta_id,
-																		doc_id
+																		
+																		doc_id,
+																		numpregunta
 																	)
 							values
 								(
@@ -864,9 +868,20 @@ begin
 									p_puntaje_correcto,
 									p_estado,
 									p_pregunta_id,
-									p_doc_id
-								);
-
+									p_doc_id,
+									p_numPregunta
+								);*/
+							update 
+								respuesta_pregunta_usuario
+							set 
+								respuesta_usuario = p_respuesta_usuario,
+								puntaje_correcto = p_puntaje_correcto,
+								estado = p_estado,
+								pregunta_id = p_pregunta_id
+							where
+								doc_id = p_doc_id and
+								numPregunta = p_numPregunta;
+								
 							update 
 								correlativo 
 							set 
@@ -886,7 +901,13 @@ begin
 end
 $$ language plpgsql;
 
-
+select * from fn_RegistrarRespuestaUsuario
+									(
+										'Generar o aumentar las ventas en línea.',
+										19,
+										'5',
+										'12345678'
+									);
 
 -- FUNCIÓN REGISTRAR caificarUsuaNull
 select * from fn_calificarExamenNull
@@ -1008,10 +1029,16 @@ CREATE OR REPLACE FUNCTION fn_eliminarRespuestaPromedio
 											)returns void as
 $$
 declare
-
+	contador int := 0;
+	i int := 0;
+	j integer := 40;
+	cont character varying(3);
 	p_promedio_iddd integer;
 	
 begin
+							delete from respuesta_pregunta_usuario
+							where doc_id = p_doc_id and estadoCalificado is null;
+							
 							select 
 								distinct p.promedio_id into p_promedio_iddd
 							from 
@@ -1027,6 +1054,30 @@ begin
 							
 							delete from promedio
 							where promedio_id = p_promedio_iddd;
+							
+							LOOP
+								EXIT when contador >= j;
+								contador = contador +1;
+									insert into respuesta_pregunta_usuario(respuesta_pregunta_usuario_id, respuesta_usuario, doc_id, numpregunta)
+									values
+									(
+										(select * from f_generar_correlativo('respuesta_pregunta_usuario') as nc),
+										'falta',
+										p_doc_id,
+										contador
+									);
+									
+									update 
+										correlativo 
+									set 
+										numero = numero + 1 
+									where 
+										tabla='respuesta_pregunta_usuario';
+								
+							end loop;
+								
+								
+							-- select * from respuesta_pregunta_usuario
 							
 end
 $$ language plpgsql;

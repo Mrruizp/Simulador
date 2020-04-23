@@ -168,8 +168,6 @@ class Usuario extends Conexion {
                         u.apellidos,
                         u.direccion,
                         u.telefono,
-                        u.sexo,
-                        u.edad,
                         u.email,
                         u.cargo_id,
                         c.codigo_usuario,
@@ -242,9 +240,7 @@ class Usuario extends Conexion {
                                         :p_nombres,
                                         :p_apellidos, 
                                         :p_direccion, 
-                                        :p_telefono, 
-                                        :p_sexo, 
-                                        :p_edad, 
+                                        :p_telefono,
                                         :p_email, 
                                         :p_cargo_id, 
                                         :p_clave,
@@ -259,8 +255,8 @@ class Usuario extends Conexion {
                 $sentencia->bindParam(":p_apellidos", $this->getApellidos());
                 $sentencia->bindParam(":p_direccion", $this->getDireccion());
                 $sentencia->bindParam(":p_telefono", $this->getTelefono());
-                $sentencia->bindParam(":p_sexo", $this->getSexo());
-                $sentencia->bindParam(":p_edad", $this->getEdad());
+                //$sentencia->bindParam(":p_sexo", $this->getSexo());
+                //$sentencia->bindParam(":p_edad", $this->getEdad());
                 $sentencia->bindParam(":p_email", $this->getEmail());
                 $sentencia->bindParam(":p_cargo_id", $this->getCargo());
                 $sentencia->bindParam(":p_clave", $this->getConstrasenia());
@@ -298,9 +294,7 @@ class Usuario extends Conexion {
                                         :p_nombres,
                                         :p_apellidos, 
                                         :p_direccion, 
-                                        :p_telefono, 
-                                        :p_sexo, 
-                                        :p_edad, 
+                                        :p_telefono,
                                         :p_email, 
                                         :p_cargo_id, 
                                         :p_clave,
@@ -315,8 +309,8 @@ class Usuario extends Conexion {
             $sentencia->bindParam(":p_apellidos", $this->getApellidos());
             $sentencia->bindParam(":p_direccion", $this->getDireccion());
             $sentencia->bindParam(":p_telefono", $this->getTelefono());
-            $sentencia->bindParam(":p_sexo", $this->getSexo());
-            $sentencia->bindParam(":p_edad", $this->getEdad());
+            //$sentencia->bindParam(":p_sexo", $this->getSexo());
+            //$sentencia->bindParam(":p_edad", $this->getEdad());
             $sentencia->bindParam(":p_email", $this->getEmail());
             $sentencia->bindParam(":p_cargo_id", $this->getCargo());
             $sentencia->bindParam(":p_clave", $this->getConstrasenia());

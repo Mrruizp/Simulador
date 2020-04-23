@@ -8,8 +8,21 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <?php include_once 'estilos.view.php'; ?>
     </head>
+    <style>
+        #myModal{
+            padding: 225px 0 0 0; 
+            width: 100% !important;
+            position: absolute;
+            
+        }
+        #inicioSesion{
+            padding: 100px 0 0 0; 
+            
+        }
+
+    </style>
     <body class="hold-transition login-page"><!-- bg-gray-light: fondo de página -->
-        <div class="login-box">
+        <div class="login-box" id="inicioSesion">
             
             <div class="login-box-body">  
                 <div class="logo">
@@ -22,21 +35,22 @@
 
                 <!-- /.login-->
 
-                <form class="form-horizontal" action="../controller/sesion.validar.controller.php" method="post">
+                <!--<form class="form-horizontal" action="../controller/sesion.validar.controller.php" method="post">-->
+                <form id="frmgrabar1" class="form-horizontal">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-3 control-label">Usuario</label>
 
                       <div class="col-sm-9">
                         <input type="email" class="form-control"
-                            style="background-color:#394394; color:white" name="txtEmail" required="" autofocus="">
+                            style="background-color:#394394; color:white" id="txtEmail" name="txtEmail" required="" autofocus="">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputPassword3" class="col-sm-3 control-label">Contraseña</label>
 
                       <div class="col-sm-9">
-                        <input type="password" class="form-control" style="background-color:#394394; color:white" name="txtClave" required="">
+                        <input type="password" class="form-control" style="background-color:#394394; color:white" id="txtClave" name="txtClave" required="">
                       </div>
                     </div>
                   </div>
@@ -60,12 +74,13 @@
                                 </div>
                 </form>
                 <br/><br/><br/><br/>
-                <div class="text-center">
+                <div class="text-center col-md-12">
                   <p class="text-black">
                       ©<?php echo date('Y'); ?> 
                       Copyright - IPEV. Todos los derechos reservados.
                   </p>
                 </div>
+                <br/><br/>
             </div>
         </div>
             <!-- Fin login -->
@@ -132,6 +147,7 @@
 
         </section>
         <?php include_once './scripts.view.php'; ?>
+        <script src="js/sesionValidar.js" type="text/javascript"></script>
         <!-- /.login-box -->
 
         <!-- jQuery 2.2.3 -->
@@ -149,6 +165,6 @@
                 });
             });
         </script>-->
-        <!--<script src="js/registrate.usuario.js" type="text/javascript"></script> -->
+        <!--<script src="js/sesionValidar.js" type="text/javascript"></script> -->
     </body>
 </html>

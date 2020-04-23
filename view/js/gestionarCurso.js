@@ -145,9 +145,12 @@ function listarPregunta() {
             html += '<table id="tabla-listadoPregunta" class="table table-bordered table-striped">';
             html += '<thead>';
             html += '<tr style="background-color: #ededed; height:25px;">';
-            html += '<th style="text-align:center">CODIGO PREGUNTA</th>';
-            html += '<th style="text-align:center">CURSO</th>';
-            html += '<th style="text-align:center">NOMBRE DE la PREGUNTA</th>';
+            html += '<th style="text-align:center">PRUEBA</th>';
+            html += '<th style="text-align:center">PREGUNTA</th>';
+            html += '<th style="text-align:center">ALTERNATIVA 1</th>';
+            html += '<th style="text-align:center">ALTERNATIVA 2</th>';
+            html += '<th style="text-align:center">ALTERNATIVA 3</th>';
+            html += '<th style="text-align:center">ALTERNATIVA 4</th>';
             html += '<th style="text-align:center">RESPUESTA</th>';
             html += '<th style="text-align: center">OPCIONES PREGUNTA</th>';
             html += '</tr>';
@@ -155,9 +158,12 @@ function listarPregunta() {
             html += '<tbody>';
             $.each(datosJSON.datos, function (i, item) {
                 html += '<tr>';
-                html += '<td align="center" style="font-weight:normal">' + item.pregunta_id + '</td>';
                 html += '<td align="center" style="font-weight:normal">' + item.nombre_curso + '</td>';
-                html += '<td align="left" style="font-weight:normal">' + item.nombre_pregunta + '</td>';
+                html += '<td align="center" style="font-weight:normal">' + item.nombre_pregunta + '</td>';
+                html += '<td align="left" style="font-weight:normal">' + item.alternativa1 + '</td>';
+                html += '<td align="left" style="font-weight:normal">' + item.alternativa2 + '</td>';
+                html += '<td align="left" style="font-weight:normal">' + item.alternativa3 + '</td>';
+                html += '<td align="left" style="font-weight:normal">' + item.alternativa4 + '</td>';
                 html += '<td align="center" style="font-weight:normal">' + item.respuesta + '</td>';
                 html += '<td align="center">';
                 html += '<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModalPregunta" onclick="leerDatosPregunta(' + item.pregunta_id + ')"><i class="fa fa-pencil"></i></button>';
@@ -166,7 +172,6 @@ function listarPregunta() {
                 html += '</td>';
                 html += '</tr>';
             });
-
             html += '</tbody>';
             html += '</table>';
             html += '</small>';
@@ -370,7 +375,11 @@ $("#frmgrabarPregunta").submit(function (event) {
                                 //p_pregunta_id: $("#txtPregunta_id").val(),
                                 p_prueba_id: $("#textPrueba_id").val(),
                                 p_descripcion: $("#editor1").val(),
-                                p_respuesta: $("#txtRespuesta").val(),                               
+                                p_respuesta: $("#txtRespuesta").val(), 
+                                p_alternativa1: $("#textAlternativa1").val(), 
+                                p_alternativa2: $("#textAlternativa2").val(),                               
+                                p_alternativa3: $("#textAlternativa3").val(), 
+                                p_alternativa4: $("#textAlternativa4").val(), 
                                 
                                 p_tipo_ope: $("#txtTipoOperacionPregunta").val(),
                                 p_codigo_pregunta: codPregunta
@@ -472,6 +481,11 @@ function leerDatosPregunta(codPregunta) {
             $("#textPrueba_id").val(jsonResultado.datos.prueba_id);
             $(CKEDITOR.instances["editor1"].setData(jsonResultado.datos.nombre_pregunta));
             $("#txtRespuesta").val(jsonResultado.datos.respuesta);
+
+            $("#textAlternativa1").val(jsonResultado.datos.alternativa1);
+            $("#textAlternativa2").val(jsonResultado.datos.alternativa2);
+            $("#textAlternativa3").val(jsonResultado.datos.alternativa3);
+            $("#textAlternativa4").val(jsonResultado.datos.alternativa4);
             $("#titulomodal").html("Modificar datos de la Pregunta");
         }
     }).fail(function (error) {

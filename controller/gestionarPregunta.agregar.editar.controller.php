@@ -15,7 +15,19 @@ try {
             empty($_POST["p_descripcion"]) ||
 
             !isset($_POST["p_respuesta"]) ||
-            empty($_POST["p_respuesta"]) ||            
+            empty($_POST["p_respuesta"]) || 
+
+            !isset($_POST["p_alternativa1"]) ||
+            empty($_POST["p_alternativa1"]) ||
+
+            !isset($_POST["p_alternativa2"]) ||
+            empty($_POST["p_alternativa2"]) ||
+
+            !isset($_POST["p_alternativa3"]) ||
+            empty($_POST["p_alternativa3"]) ||
+
+            !isset($_POST["p_alternativa4"]) ||
+            empty($_POST["p_alternativa4"]) ||           
             
             !isset($_POST["p_tipo_ope"]) ||
             empty($_POST["p_tipo_ope"])
@@ -24,9 +36,14 @@ try {
         //exit();
     }
     // $Pregunta_id       = $_POST["p_pregunta_id"];
-     $Prueba_id          = $_POST["p_prueba_id"];
-     $Nombre_pregunta   = $_POST["p_descripcion"];
-     $Respuesta         = $_POST["p_respuesta"];         
+     $Prueba_id       = $_POST["p_prueba_id"];
+     $Nombre_pregunta = $_POST["p_descripcion"];
+     $Respuesta       = $_POST["p_respuesta"];   
+
+     $Alternativa1    = $_POST["p_alternativa1"]; 
+     $Alternativa2    = $_POST["p_alternativa2"]; 
+     $Alternativa3    = $_POST["p_alternativa3"]; 
+     $Alternativa4    = $_POST["p_alternativa4"];       
      
      $tipoOperacion = $_POST["p_tipo_ope"];
 
@@ -36,6 +53,11 @@ try {
         $objPregunta->setPrueba_id($Prueba_id);
         $objPregunta->setNombre_pregunta($Nombre_pregunta);
         $objPregunta->setRespuesta($Respuesta);
+
+        $objPregunta->setAlternativa1($Alternativa1);
+        $objPregunta->setAlternativa2($Alternativa2);
+        $objPregunta->setAlternativa3($Alternativa3);
+        $objPregunta->setAlternativa4($Alternativa4);
         //$objPregunta->setPregunta_id($Pregunta_id);
         $resultado = $objPregunta->agregar();
         if ($resultado) {
@@ -56,6 +78,11 @@ try {
         $objPregunta->setNombre_pregunta($Nombre_pregunta);
         $objPregunta->setRespuesta($Respuesta);
         $objPregunta->setPrueba_id($Prueba_id);
+
+        $objPregunta->setAlternativa1($Alternativa1);
+        $objPregunta->setAlternativa2($Alternativa2);
+        $objPregunta->setAlternativa3($Alternativa3);
+        $objPregunta->setAlternativa4($Alternativa4);
 
         $resultado = $objPregunta->editar();
         if ($resultado) {
