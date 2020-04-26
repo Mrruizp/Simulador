@@ -31,6 +31,7 @@ class Curso extends Conexion {
                         nombre_curso 
                     from 
                         curso
+                    where nombre_curso != 'Sin curso'
                     order by 
                             2
                 ";

@@ -37,13 +37,16 @@ class Sesion extends Conexion {
                             r.codigo_usuario,                           
                             c.descripcion as cargo,
                             c.cargo_id,
-                            r.tipo
+                            r.tipo,
+                            d.curso_id
                     from
                             cargo c inner join usuario u 
                     on 
                             (c.cargo_id = u.cargo_id) inner join credenciales_acceso r
                     on
-                            (r.doc_id = u.doc_id)
+                            (r.doc_id = u.doc_id) left join detalle_docente_profesor d
+                    on 
+                            u.doc_id = d.doc_id
                     where
                             u.email = :p_email 
                 ";
@@ -72,6 +75,7 @@ class Sesion extends Conexion {
                         $_SESSION["cargo_id"] = $resultado["cargo_id"];
                         $_SESSION["cargo"] = $resultado["cargo"]; // descripción del cargo
                         $_SESSION["tipo"] = $resultado["tipo"]; // tipo de usuario rol
+                        $_SESSION["curso_id"] = $resultado["curso_id"]; // tipo de usuario rol
 
                         return "SI"; //Si ingresa
                     }

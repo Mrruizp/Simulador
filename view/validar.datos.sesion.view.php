@@ -17,6 +17,7 @@ $nombreUsuario = ucwords(strtolower($_SESSION["s_usuario"]));
 $s_cargo = $_SESSION["cargo"];
 $s_codigoUsuario = $_SESSION["codigo_usuario"];
 $s_codigoCargo = $_SESSION["cargo_id"];
+$s_codigoCurso = $_SESSION["curso_id"];
 
 
 //$s_nombreUsuario = $_SESSION["s_usuario"];

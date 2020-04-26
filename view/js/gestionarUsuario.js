@@ -106,10 +106,10 @@ function leerDatos(codIdentidad) {
             $("#tipo").val(jsonResultado.datos.tipo);
             $("#estado").val(jsonResultado.datos.estado);
             $("#cuenta").val(jsonResultado.datos.email);
-            if(jsonResultado.datos.curso_id === null)
-                $("#textCurso_id").val("0");
+            if(jsonResultado.datos.curso_id === null || jsonResultado.datos.curso_id === "27")
+                $("#textCurso_id").val("27");
             else
-                $("#textCurso_id").val(jsonResultado.datos.curso_id);
+                 $("#textCurso_id").val(jsonResultado.datos.curso_id);
             
 
 

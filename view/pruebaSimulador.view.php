@@ -58,8 +58,8 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                
                                                 <?php
                                                     $total_imagenes = count(glob('fotos/anuncios/{*.jpg}',GLOB_BRACE));
-                                                    //echo 'total_imagenes = '.$total_imagenes;
-                                                    //$url;
+                                                    if($_SESSION["cargo"] !== "Docente")
+                                                    {
                                                        for($i = 1; $i <= $total_imagenes; $i ++) 
                                                        {
                                                             $e = $i;
@@ -72,10 +72,10 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                                 <!--<input type="text" name="id" value="<?php echo $i; ?>">-->
                                                                 
                                                                     <a href="cursoContenidoSimulador.View.php?id=<?php echo $i; ?>">    
-                                                                        <img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image">
+                                                                        <img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image"><br/>
                                                                         <button type="button" class="btn btn-primary btn-md">Entrar</button>
                                                                 
-                                                            </form>
+                                                          
                                                         </div>    
 
                                                     <?php
@@ -96,8 +96,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                                 
                                                                 <button type="button" class="btn btn-primary btn-md">Entrar</button>
 
-                                                                
-                                                            </form>
+                                                      
                                                         </div>
                                                     </div><br/>
 
@@ -105,7 +104,27 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                         $i++;
                                                         }
                                                        }
-                                                ?>      
+                                                    }else
+                                                    {
+                                                        $url = "fotos/anuncios/$_SESSION[curso_id].jpg"; 
+                                                        $i = $_SESSION["curso_id"];
+                                                ?>
+                                                        <div class="row">
+                                                        <div class="text-center col-xs-12">
+                                                            
+                                                                
+                                                                
+                                                                    <a href="cursoContenidoSimulador.View.php?id=<?php echo $i; ?>">    
+                                                                        <img src="<?php echo $url; ?>" align="center" class="img-thumbnail" alt="Responsive image"><br/>
+                                                                        <button type="button" class="btn btn-primary btn-md">Entrar</button>
+                                                                
+                                                          
+                                                        </div> 
+                                                        </div>
+                                                <?php
+
+                                                    }
+                                                ?>     
                                             </div>
                                         </div>
                                     </div>

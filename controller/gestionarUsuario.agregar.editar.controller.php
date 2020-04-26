@@ -53,8 +53,8 @@
             empty($_POST["p_tipo_ope"])
     ) 
         {
-        Helper::imprimeJSON(500, "Falta completar datos", "");
-        exit();
+       // Helper::imprimeJSON(500, "Falta completar datos", "");
+       // exit();
     }
 
     $Dni                = $_POST["p_doc_ident"];

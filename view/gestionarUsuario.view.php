@@ -238,7 +238,7 @@
                                                     <p>
                                                         <label class="control-label">Curso</label>
                                                         <select size="0" style="font-weight:normal;" id="textCurso_id" name="textCurso_id" class="form-control has-feedback-left">
-                                                            <option value="0">Seleccionar un curso </option>
+                                                            <option value="27">Seleccionar un curso </option>
                                                             <option value="1">Agile Coach</option>
                                                             <option value="2">Innovation Management</option>
                                                             <option value="3">Kanban</option>

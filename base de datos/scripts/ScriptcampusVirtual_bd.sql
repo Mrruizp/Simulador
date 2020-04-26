@@ -166,7 +166,19 @@ CREATE TABLE correlativo
 	constraint pk_promedio_promedio_id primary key (promedio_id)
  );
  
- select * from RESPUESTA_PREGUNTA_USUARIO
+  CREATE TABLE detalle_docente_profesor
+  (
+  detalle_docente_profesor_id integer,
+  --fecha_inicio character varying(50),
+  --fecha_fin character varying(50),
+  curso_id int,
+  doc_id character varying(20),
+  constraint pk_detalle_docente_profesor_detalle_docente_profesor_id primary key (detalle_docente_profesor_id),
+  constraint fk_detalle_docente_profesor_curso_id foreign key(curso_id) references curso(curso_id),
+  constraint fk_detalle_docente_profesor_doc_id foreign key(doc_id) references usuario(doc_id)	  
+  );
+ 
+ select * from detalle_docente_profesor
  
  -- Registros
  -- Menú
@@ -423,8 +435,8 @@ values(6,'Estudiante');
 insert into usuario(doc_id,nombres,apellidos,direccion,telefono,sexo,edad,email,cargo_id)
 values('45977448','Juan','Benito casas','Av. Guardia Civil, urb. Proceres #4456. Surco','996456547','M','28', 'juanBenito@hotmail.com',1);
 
-insert into usuario(doc_id,nombres,apellidos,direccion,telefono,sexo,edad,email,cargo_id)
-values('12345678','Maria','Trinida Asusta','Av. Guardia Civil, urb. Proceres #4450. Surco','996456514','M','25', 'maritri@hotmail.com',2);
+insert into usuario(doc_id,nombres,apellidos,direccion,telefono,email,cargo_id)
+values('12345678','Maria','Trinida Asusta','Av. Guardia Civil, urb. Proceres #4450. Surco','996456514','maritri@hotmail.com',2);
 
 insert into usuario(doc_id,nombres,apellidos,direccion,telefono,sexo,edad,email,cargo_id)
 values('87654321','Jacinta','Venecia Chel','Av. Guardia Civil, urb. Proceres #4455. Surco','996456522','M','24', 'jacintabe@hotmail.com',3);
@@ -438,6 +450,9 @@ values(2,(select MD5('123')),'D','A',(select now()), '12345678');
 
 insert into credenciales_acceso(codigo_usuario,clave,tipo,estado,fecha_registro,doc_id)
 values(3,(select MD5('123')),'E','A',(select now()), '87654321');
+
+
+select * from correlativo;
 
 select now()
 select MD5('123')
@@ -550,18 +565,23 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
  end
  $$ language plpgsql;
  
- -- drop FUNCTION fn_registrarUsuario
+ /* drop FUNCTION fn_registrarUsuario( integer,  character varying(20),  character varying(50),
+					 character varying(50),  character varying(200), 
+	 				 character varying(25),  character varying(150), 
+	 				 integer,	 character(32), char(1), char(1),
+	 				 integer)
+*/
  -- FUNCION PARA INSERTAR USUARIO AL SISTEMA
  CREATE OR REPLACE FUNCTION fn_registrarUsuario(
 					
 					p_codigo_usuario integer, p_doc_id character varying(20), p_nombres character varying(50),
 					p_apellidos character varying(50), p_direccion character varying(200), 
 	 				p_telefono character varying(25), p_email character varying(150), 
-	 				p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1)
+	 				p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1),
+	 				p_codigo_curso integer
 					 )  RETURNS void AS   
  $$
  begin
-							
 							insert into usuario
 									(
 										doc_id,nombres,apellidos,direccion,
@@ -572,7 +592,25 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 									p_doc_id,p_nombres,p_apellidos,p_direccion,
 									p_telefono,p_email,p_cargo_id
 								);
-
+							
+							insert into detalle_docente_profesor
+														(
+															detalle_docente_profesor_id, 
+															curso_id, 
+															doc_id
+														)
+							values(
+									(select * from f_generar_correlativo('detalle_docente_profesor') as nc),
+									p_codigo_curso,
+									p_doc_id
+								);
+							
+							update 
+								correlativo 
+							set 
+								numero = numero + 1 
+							where 
+								tabla='detalle_docente_profesor';
 
 
 
@@ -583,17 +621,36 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
  end
  $$ language plpgsql;
  
- select * from credenciales_acceso
+ select * from correlativo
+ 
+ update correlativo
+ set numero = 2
+ where tabla = 'credenciales_acceso'
   -- FUNCION PARA ACTUALIZAR USUARIO AL SISTEMA
+  /* drop function fn_editarUsuario
+ 								(
+									 integer,  character varying(20), 
+									 character varying(50), character varying(50), 
+									 character varying(200), character varying(25), 
+									 character varying(150), 
+									 integer,	p_clave character(32), char(1), char(1),
+									 integer
+ 								);
+								*/
  CREATE OR REPLACE FUNCTION fn_editarUsuario
  								(
 									p_codigo_usuario integer, p_doc_id character varying(20), 
 									p_nombres character varying(50),p_apellidos character varying(50), 
 									p_direccion character varying(200),p_telefono character varying(25), 
 									p_email character varying(150), 
-									p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1)
+									p_cargo_id integer,	p_clave character(32),p_tipo char(1),p_estado char(1),
+									p_codigoCurso integer
  								)RETURNS void AS
- $$
+$$
+declare
+	
+	codigo integer;
+	
  begin
  							-- update usuario
  								
@@ -622,6 +679,32 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
 									doc_id = p_doc_id
 								where 
 									doc_id = p_doc_id;
+								
+								select detalle_docente_profesor_id into codigo from detalle_docente_profesor where doc_id = p_doc_id;
+								
+								if codigo is null then
+									insert into detalle_docente_profesor
+														(
+															detalle_docente_profesor_id, 
+															curso_id, 
+															doc_id
+														)
+									values(
+											(select * from f_generar_correlativo('detalle_docente_profesor') as nc),
+											p_codigoCurso,
+											p_doc_id
+										);
+								else
+								
+									update 
+										detalle_docente_profesor
+									set
+
+										curso_id  = p_codigoCurso
+									where 
+										doc_id = p_doc_id;
+									
+								end if;
  
  
  end
@@ -632,7 +715,10 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
  
  $$
  BEGIN
- 	
+ 				-- Eliminar detalle_docente_profesor
+ 						delete from detalle_docente_profesor
+						where doc_id = p_doc_id;
+						
 				-- Eliminar credenciales_acceso
 						delete from credenciales_acceso
 						where doc_id = p_doc_id;
@@ -641,8 +727,6 @@ values(1,40,'15m',60, 'Responda correctamente y despacio.', 1);
  						delete from usuario
 						where doc_id = p_doc_id;
 						
-						
- 
  end
  $$ language plpgsql;
  
