@@ -97,12 +97,19 @@ function leerDatos(codIdentidad) {
             $("#txtDireccion").val(jsonResultado.datos.direccion);
             $("#txtEmail").val(jsonResultado.datos.telefono);
             $("#txtTelefono").val(jsonResultado.datos.telefono);
+
+            $("#sexo").val(jsonResultado.datos.sexo);
+            $("#edad").val(jsonResultado.datos.edad);
             $("#txtEmail").val(jsonResultado.datos.email);
             $("#cargo").val(jsonResultado.datos.cargo_id);
             $("#contrasenia").val(jsonResultado.datos.clave);
             $("#tipo").val(jsonResultado.datos.tipo);
             $("#estado").val(jsonResultado.datos.estado);
             $("#cuenta").val(jsonResultado.datos.email);
+            if(jsonResultado.datos.curso_id === null)
+                $("#textCurso_id").val("0");
+            else
+                $("#textCurso_id").val(jsonResultado.datos.curso_id);
             
 
 
@@ -148,7 +155,7 @@ $("#frmgrabar").submit(function (event) {
 
     swal({
         title: "Confirme",
-        text: "¿Esta seguro de grabar los datos ingresados?",
+        text: "多Esta seguro de grabar los datos ingresados?",
         showCancelButton: true,
         confirmButtonColor: '#3d9205',
         confirmButtonText: 'Si',
@@ -175,16 +182,19 @@ $("#frmgrabar").submit(function (event) {
                     $.post(
                             "../controller/gestionarUsuario.agregar.editar.controller.php",
                             {
-                                p_doc_ident:   $("#txtDoc_identidad").val(),
-                                p_nombres:     $("#txtNombre").val(),
-                                p_apellidos:   $("#txtApellidos").val(),
-                                p_direccion:   $("#txtDireccion").val(),
-                                p_email:       $("#txtEmail").val(),
-                                p_telefono:    $("#txtTelefono").val(),
-                                p_cargo:       $("#cargo").val(),
-                                p_contrasenia: $("#contrasenia").val(),
-                                p_tipo:        $("#tipo").val(),
-                                p_estado:      $("#estado").val(),
+                                p_doc_ident:    $("#txtDoc_identidad").val(),
+                                p_nombres:      $("#txtNombre").val(),
+                                p_apellidos:    $("#txtApellidos").val(),
+                                p_direccion:    $("#txtDireccion").val(),
+                                p_email:        $("#txtEmail").val(),
+                                p_telefono:     $("#txtTelefono").val(),
+                                //p_sexo:        $("#sexo").val(),
+                                //p_edad:        $("#edad").val(),
+                                p_cargo:        $("#cargo").val(),
+                                p_contrasenia:  $("#contrasenia").val(),
+                                p_tipo:         $("#tipo").val(),
+                                p_estado:       $("#estado").val(),
+                                p_codigo_curso: $("#textCurso_id").val(),
                                // p_cuenta:      $("#cuenta").val(),
                                 p_tipo_ope:    $("#txtTipoOperacion").val(),
                                 p_cod_usuario: codUsuario
@@ -193,7 +203,7 @@ $("#frmgrabar").submit(function (event) {
                         var datosJSON = resultado;
 
                         if (datosJSON.estado === 200) {
-                            swal("Exito", datosJSON.mensaje, "success");
+                            swal("Éxito", datosJSON.mensaje, "success");
                             $("#btncerrar").click(); //Cerrar la ventana 
                             listar(); //actualizar la lista
                         } else {
@@ -239,7 +249,7 @@ $("#myModal").on("shown.bs.modal", function () {
 function eliminar(codUsuario) {
     swal({
         title: "Confirme",
-        text: "¿Esta seguro de eliminar el registro seleccionado?",
+        text: "多Esta seguro de eliminar el registro seleccionado?",
         showCancelButton: true,
         confirmButtonColor: '#d93f1f',
         confirmButtonText: 'Si',
@@ -259,7 +269,7 @@ function eliminar(codUsuario) {
                         var datosJSON = resultado;
                         if (datosJSON.estado === 200) { //ok
                             listar();
-                            swal("Exito", datosJSON.mensaje, "success");
+                            swal("Éxito", datosJSON.mensaje, "success");
                         }
 
                     }).fail(function (error) {

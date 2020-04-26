@@ -4,6 +4,8 @@ $_POST["s_usuario"] = $dniSesion;
 
 
 require_once '../controller/perfil.usuario.leer.datos.controller.php';
+
+
 ?>
 <!DOCTYPE html>
 <html>

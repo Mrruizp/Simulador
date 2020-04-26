@@ -11,12 +11,13 @@ class Usuario extends Conexion {
     private $Direccion;
     private $Email;
     private $Telefono;
-    private $Sexo;
-    private $Edad;
+    //private $Sexo;
+    //private $Edad;
     private $Cargo;
     private $Constrasenia;
     private $Tipo;
     private $Estado;
+    private $CodigoCurso;
     //private $Cuenta;
 
     public function getCodigoUsuario() {
@@ -51,17 +52,9 @@ class Usuario extends Conexion {
         return $this->Telefono;
     }
 
-    public function getSexo(){
-        return $this->Sexo;
-    }
-    
-    public function getEdad(){
-        return $this->Edad;
-    }
-
     public function getCargo()
     {
-        return $this->Cargo; // es el código del cargo
+        return $this->Cargo; // es el c贸digo del cargo
     }
 
     public function getConstrasenia(){
@@ -75,6 +68,10 @@ class Usuario extends Conexion {
 
     public function getEstado(){
         return $this->Estado;
+    }
+
+    public function getCodigoCurso(){
+        return $this->CodigoCurso;
     }
 
     public function setCodigoUsuario($CodigoUsuario) {
@@ -109,14 +106,6 @@ class Usuario extends Conexion {
         $this->Telefono = $Telefono;
     }
 
-    public function setSexo($Sexo) {
-        $this->Sexo = $Sexo;
-    }
-
-    public function setEdad($Edad) {
-        $this->Edad = $Edad;
-    }
-
     public function SetCargo($Cargo){
         $this->Cargo = $Cargo;
     }
@@ -131,6 +120,10 @@ class Usuario extends Conexion {
 
     public function SetEstado($Estado){
         $this->Estado = $Estado;
+    }
+
+    public function SetCodigoCurso($CodigoCurso){
+        $this->CodigoCurso = $CodigoCurso;
     }
 
     public function listar() {
@@ -173,11 +166,14 @@ class Usuario extends Conexion {
                         c.codigo_usuario,
                         c.clave,
                         c.tipo,
-                        c.estado
+                        c.estado,
+                        d.curso_id
                         
                     from usuario u inner join credenciales_acceso c
                     on
-                        u.doc_id = c.doc_id
+                        u.doc_id = c.doc_id left join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
                     where u.doc_id = :p_dni
 
                 ";
@@ -240,12 +236,13 @@ class Usuario extends Conexion {
                                         :p_nombres,
                                         :p_apellidos, 
                                         :p_direccion, 
-                                        :p_telefono,
+                                        :p_telefono, 
                                         :p_email, 
                                         :p_cargo_id, 
                                         :p_clave,
                                         :p_tipo,
-                                        :p_estado
+                                        :p_estado,
+                                        :p_codigoCurso
                                      );";
                 $sentencia = $this->dblink->prepare($sql);
                 // $sentencia->bindParam(":p_codigoCandidato", $this->getCodigoCandidato());
@@ -255,13 +252,12 @@ class Usuario extends Conexion {
                 $sentencia->bindParam(":p_apellidos", $this->getApellidos());
                 $sentencia->bindParam(":p_direccion", $this->getDireccion());
                 $sentencia->bindParam(":p_telefono", $this->getTelefono());
-                //$sentencia->bindParam(":p_sexo", $this->getSexo());
-                //$sentencia->bindParam(":p_edad", $this->getEdad());
                 $sentencia->bindParam(":p_email", $this->getEmail());
                 $sentencia->bindParam(":p_cargo_id", $this->getCargo());
                 $sentencia->bindParam(":p_clave", $this->getConstrasenia());
                 $sentencia->bindParam(":p_tipo", $this->getTipo());
                 $sentencia->bindParam(":p_estado", $this->getEstado());
+                $sentencia->bindParam(":p_codigoCurso", $this->getCodigoCurso());
                 $sentencia->execute();
                 /*Insertar en la tabla laboratorio*/
                 
@@ -294,12 +290,13 @@ class Usuario extends Conexion {
                                         :p_nombres,
                                         :p_apellidos, 
                                         :p_direccion, 
-                                        :p_telefono,
+                                        :p_telefono, 
                                         :p_email, 
                                         :p_cargo_id, 
                                         :p_clave,
                                         :p_tipo,
-                                        :p_estado
+                                        :p_estado,
+                                        :p_codigoCurso
                                      );";
             $sentencia = $this->dblink->prepare($sql);
             
@@ -309,13 +306,12 @@ class Usuario extends Conexion {
             $sentencia->bindParam(":p_apellidos", $this->getApellidos());
             $sentencia->bindParam(":p_direccion", $this->getDireccion());
             $sentencia->bindParam(":p_telefono", $this->getTelefono());
-            //$sentencia->bindParam(":p_sexo", $this->getSexo());
-            //$sentencia->bindParam(":p_edad", $this->getEdad());
             $sentencia->bindParam(":p_email", $this->getEmail());
             $sentencia->bindParam(":p_cargo_id", $this->getCargo());
             $sentencia->bindParam(":p_clave", $this->getConstrasenia());
             $sentencia->bindParam(":p_tipo", $this->getTipo());
             $sentencia->bindParam(":p_estado", $this->getEstado());
+            $sentencia->bindParam(":p_codigoCurso", $this->getCodigoCurso());
             $sentencia->execute();
             return true;
         } catch (Exception $exc) {

@@ -113,3 +113,13 @@
 
             }
 </script>
+<script>
+            function mostrarAddCurso(id) {
+
+                if (id == "S") {
+                    $("#curso").show();
+                }else{
+                    $("#curso").hide();
+                }  
+            }
+</script>

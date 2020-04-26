@@ -25,11 +25,11 @@
             !isset($_POST["p_telefono"]) ||
             empty($_POST["p_telefono"]) ||
             
-            !isset($_POST["p_sexo"]) ||
-            empty($_POST["p_sexo"]) ||
+            //!isset($_POST["p_sexo"]) ||
+            //empty($_POST["p_sexo"]) ||
             
-            !isset($_POST["p_edad"]) ||
-            empty($_POST["p_edad"]) ||
+            //!isset($_POST["p_edad"]) ||
+            //empty($_POST["p_edad"]) ||
             
             !isset($_POST["p_cargo"]) ||
             empty($_POST["p_cargo"]) ||
@@ -42,6 +42,9 @@
             
             !isset($_POST["p_estado"]) ||
             empty($_POST["p_estado"]) ||
+
+            !isset($_POST["p_codigo_curso"]) ||
+            empty($_POST["p_codigo_curso"]) ||
             
          //   !isset($_POST["p_cuenta"]) ||
         //    empty($_POST["p_cuenta"]) ||
@@ -60,12 +63,13 @@
     $Direccion          = $_POST["p_direccion"];
     $Email              = $_POST["p_email"];
     $Telefono           = $_POST["p_telefono"];
-    $Sexo               = $_POST["p_sexo"];
-    $Edad               = $_POST["p_edad"];
+   //$Sexo               = $_POST["p_sexo"];
+   // $Edad               = $_POST["p_edad"];
     $Cargo              = $_POST["p_cargo"];
     $Constrasenia       = $_POST["p_contrasenia"];
     $Tipo               = $_POST["p_tipo"];
     $Estado             = $_POST["p_estado"];
+    $CodigoCurso        = $_POST["p_codigo_curso"];
     //$Cuenta             = $_POST["p_cuenta"];
     $tipoOperacion      = $_POST["p_tipo_ope"];
 
@@ -78,12 +82,13 @@
         $objUsuario->setDireccion($Direccion);
         $objUsuario->setEmail($Email);
         $objUsuario->setTelefono($Telefono);
-        $objUsuario->setSexo($Sexo);
-        $objUsuario->setEdad($Edad);
+       // $objUsuario->setSexo($Sexo);
+       // $objUsuario->setEdad($Edad);
         $objUsuario->setCargo($Cargo);
         $objUsuario->setConstrasenia($Constrasenia);
         $objUsuario->setTipo($Tipo);
         $objUsuario->setEstado($Estado);
+        $objUsuario->setCodigoCurso($CodigoCurso);
         //$objUsuario->setCuenta($Cuenta);
         $resultado = $objUsuario->agregar();
         if ($resultado) {
@@ -106,13 +111,13 @@
             $objUsuario->setDireccion($Direccion);
             $objUsuario->setEmail($Email);
             $objUsuario->setTelefono($Telefono);
-            $objUsuario->setSexo($Sexo);
-            $objUsuario->setEdad($Edad);
+           //$objUsuario->setSexo($Sexo);
+           // $objUsuario->setEdad($Edad);
             $objUsuario->setCargo($Cargo);
             $objUsuario->setConstrasenia($Constrasenia);
             $objUsuario->setTipo($Tipo);
             $objUsuario->setEstado($Estado);
-            
+            $objUsuario->setCodigoCurso($CodigoCurso);
             $resultado = $objUsuario->editar();
             if ($resultado) {
                 Helper::imprimeJSON(200, "Agregado correctamente", "");

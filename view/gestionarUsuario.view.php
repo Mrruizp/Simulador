@@ -8,8 +8,8 @@
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-        <meta charset="utf-8">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="../images/IPEV.jpg">
         <title>Simulador</title>
@@ -128,6 +128,8 @@
                                                         <input type="text" style="font-weight:normal;" class="form-control" id="txtApellidos" name="txtApellidos" required="">
                                                     </p>
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-xs-6">
                                                     <p>
                                                         Dirección (*)
@@ -140,13 +142,16 @@
                                                         <input type="email" style="font-weight:normal;" id="txtEmail" class="form-control" name="txtEmail" required="" onChange="javascript:document.getElementById('cuenta').value = this.value;">
                                                     </p>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+
                                                 <div class="col-xs-3">
                                                     <p>
                                                         Teléfono (*)
                                                         <input type="text" style="font-weight:normal;" id="txtTelefono" class="form-control" name="txtTelefono" required="" maxlength="20" onkeypress="ValidaSoloNumeros();">
                                                     </p>
                                                 </div>
-                                                <div class="col-xs-3">
+                                               <!-- <div class="col-xs-3">
                                                     <p>
                                                         Sexo (*)
                                                         <select size="1" style="font-weight:normal;" id="sexo" name="sexo" class="form-control has-feedback-left" required> 
@@ -206,7 +211,7 @@
                                                             <option value="60">60</option>
                                                         </select>
                                                     </p>
-                                                </div>
+                                                </div>-->
                                                 <div class="col-xs-3">
                                                     <p>
                                                         Estado (*)
@@ -214,6 +219,52 @@
                                                             <option></option>
                                                             <option value="A">Habilitado</option>
                                                             <option value="I">Deshabilitado</option>
+                                                        </select>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <p>
+                                                        ¿Dicta Curso? (*)
+                                                        <select size="1" style="font-weight:normal;" id="status" name="status" class="form-control has-feedback-left" required onChange="mostrarAddCurso(this.value);"> 
+                                                            <option></option>
+                                                            <option value="S">Si</option>
+                                                            <option value="N">No</option>
+                                                        </select>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" id="curso" style="display: none;">
+                                                    <p>
+                                                        <label class="control-label">Curso</label>
+                                                        <select size="0" style="font-weight:normal;" id="textCurso_id" name="textCurso_id" class="form-control has-feedback-left">
+                                                            <option value="0">Seleccionar un curso </option>
+                                                            <option value="1">Agile Coach</option>
+                                                            <option value="2">Innovation Management</option>
+                                                            <option value="3">Kanban</option>
+                                                            <option value="4">Scrum Master</option>
+                                                            <option value="5">Scrum Foundation</option>
+                                                            <option value="6">Scrum Developer</option>
+                                                            <option value="7">Scrum Advanced</option>
+                                                            <option value="8">Scrum Product Owner</option>
+                                                            <option value="9">Iso 27001 Auditor</option>
+                                                            <option value="0">Iso 27001 Lead Auditor</option>
+                                                            <option value="11">Iso 27001 Foundation</option>
+                                                            <option value="12">Iso 22301 Auditor</option>
+                                                            <option value="13">Iso 22301 Lead Auditor</option>
+                                                            <option value="14">Iso 22301 Foundation</option>
+                                                            <option value="15">Iso 20000 Auditor</option>
+                                                            <option value="16">Iso 20000 Lead Auditor</option>
+                                                            <option value="17">Iso 20000 Foundation</option>
+                                                            <option value="18">Cybersecurity</option>
+                                                            <option value="19">Six Sigma</option>
+                                                            <option value="20">DevOps Essentials</option>
+                                                            <option value="21">DevOps Culture</option>
+                                                            <option value="22">Marketing Digital</option>
+                                                            <option value="23">Big Data</option>
+                                                            <option value="24">Design Thinking</option>
+                                                            <option value="25">Service Desk</option>
+                                                            <option value="26">Agile Business Owner</option>
                                                         </select>
                                                     </p>
                                                 </div>

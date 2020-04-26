@@ -227,34 +227,34 @@ function listarPregunta(codigo_curso) {
                                 html += '<td align="left">' + item.nombre_pregunta + '</td>';
                                 html += '<td align="left">';
                                 html += '   <div class="form-group">';
-                                html += '       <div class="checkbox">';
+                                html += '       <div class="radio">';
                                 html += '           <label>';
                                                         if(item.alternativa1)
-                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo" value="' + item.alternativa1  + '">  '+ item.alternativa1 +'';                                               
+                                html += '               <input type="radio" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo" value="' + item.alternativa1  + '">  '+ item.alternativa1 +'';                                               
                                 html += '           </label>';
                                 html += '       </div>';
                                 html += '   </div><br/>';
                                 html += '   <div class="form-group">';
-                                html += '       <div class="checkbox">';
+                                html += '       <div class="radio">';
                                 html += '           <label>';
                                                         if(item.alternativa2)
-                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa2  + '">  '+ item.alternativa2 +'';
+                                html += '               <input type="radio" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa2  + '">  '+ item.alternativa2 +'';
                                 html += '           </label>';
                                 html += '       </div>';
                                 html += '   </div><br/>';
                                 html += '   <div class="form-group">';
-                                html += '       <div class="checkbox">';
+                                html += '       <div class="radio">';
                                 html += '           <label>';
                                                         if(item.alternativa3)
-                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa3  + '">  '+ item.alternativa3 +'';
+                                html += '               <input type="radio" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa3  + '">  '+ item.alternativa3 +'';
                                 html += '           </label>';
                                 html += '       </div>';
                                 html += '   </div><br/>';
                                 html += '   <div class="form-group">';
-                                html += '       <div class="checkbox">';
+                                html += '       <div class="radio">';
                                 html += '           <label>';
                                                     if(item.alternativa4)
-                                html += '               <input type="checkbox" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa4  + '">  '+ item.alternativa4 +'';
+                                html += '               <input type="radio" id = "' + cont + '" name = "'+ item.pregunta_id +'" class="foo form-check-input" value="' + item.alternativa4  + '">  '+ item.alternativa4 +'';
                                 html += '           </label>';
                                 html += '       </div>';
                                 html += '   </div>';

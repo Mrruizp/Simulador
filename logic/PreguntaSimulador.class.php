@@ -16,24 +16,26 @@ class PreguntaSimulador extends Conexion {
     }
     public function listar($codPrueba) {
         try {
-            $sql = "select
-                        pr.pregunta_id,
-                        pr.nombre_pregunta,
-                        pr.respuesta,
-                        pr.prueba_id,
-                        pr.alternativa1,
-                        pr.alternativa2,
-                        pr.alternativa3,
-                        pr.alternativa4
-                    from 
-                        pregunta pr left join respuesta_pregunta_usuario r
-                    on
-                        pr.pregunta_id = r.pregunta_id
-                    where
-                        prueba_id = $codPrueba
-                    order by 
-                        random()
-                    fetch first 40 rows only;";
+            $sql = "
+                        SELECT *
+                        FROM (SELECT DISTINCT pr.pregunta_id,
+                                                        pr.nombre_pregunta,
+                                                        pr.respuesta,
+                                                        pr.prueba_id,
+                                                        pr.alternativa1,
+                                                        pr.alternativa2,
+                                                        pr.alternativa3,
+                                                        pr.alternativa4
+                              from 
+                                    pregunta pr left join respuesta_pregunta_usuario r
+                                on
+                                    pr.pregunta_id = r.pregunta_id
+                                where
+                                    prueba_id = 1
+                             ) t
+                        ORDER BY random()
+                        LIMIT 7;
+                        ";
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
