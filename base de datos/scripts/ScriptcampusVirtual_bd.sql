@@ -221,7 +221,10 @@ values(5,10,'Gestionar Archivo', 'gestionarArchivos.view.php');
 insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
 values(5,11,'Gestionar Asignación', 'detalleAsignacion.view.php'); 
 insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
-values(6,12,'Simulador', 'pruebaSimulador.view.php'); 
+values(6,12,'Simulador', 'pruebaSimulador.view.php');
+
+insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
+values(6,14,'Gestionar Pregunta','gestionarPregunta.view.php')
 
 select * from menu_item_accesos
 --  Menú item acceso
@@ -383,7 +386,21 @@ values(5,11,6,2);
 insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
 values(6,12,6,1); 
 
+-- actualización al 27042020
+insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
+values(6,14,'Gestionar Pregunta','gestionarPregunta.view.php');
 
+
+
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(6,14,5,1); 
+
+update menu_item_accesos
+set 
+	acceso = '2'
+where codigo_menu = 6 and codigo_menu_item = 13 and cargo_id = 5;
+
+--------------------
 
 
  -- Correlativo

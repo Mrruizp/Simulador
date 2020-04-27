@@ -103,6 +103,40 @@ class Pregunta extends Conexion {
         }
     }
 
+    public function listarPreguntaDocente() {
+        session_name("CampusVirtual");
+                        session_start();
+        try {
+            $sql = "
+                    select 
+                        r.nombre_pregunta,
+                        r.alternativa1,
+                        r.alternativa2,
+                        r.alternativa3,
+                        r.alternativa4,
+                        r.respuesta,
+                        c.nombre_curso,
+                        r.pregunta_id
+                    from 
+                        curso c inner join prueba p
+                    on
+                        c.curso_id = p.curso_id inner join pregunta r
+                    on
+                        p.prueba_id = r.prueba_id
+                    where
+                        p.prueba_id = $_SESSION[curso_id]
+                    order by 
+                            1
+                ";
+            $sentencia = $this->dblink->prepare($sql);
+            $sentencia->execute();
+            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
     public function agregar() {
         $this->dblink->beginTransaction();
 
