@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
     cargarCbCodigoCursoPregunta("#textCurso_id", "seleccione");
+    cargarCbCodigoCursoPregunta("#textPrueba_id", "seleccione");
     listar();
     listarPrueba();
     listarPregunta();
@@ -560,7 +561,7 @@ function leerDatosPregunta(codPregunta) {
         swal("Error", datosJSON.mensaje, "error");
     });
 }
-
+/*
 function ObtenerCursoID(codCurso) {
     
                         p_curso_id      = codCurso;
@@ -569,7 +570,7 @@ function ObtenerCursoID(codCurso) {
 
                         cargarCbCodigoCurso(p_curso_id, p_textId, p_seleccione);       
 }
-
+*/
 function eliminar(codCurso) {
     swal({
         title: "Confirme",

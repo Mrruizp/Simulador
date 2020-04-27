@@ -24,28 +24,25 @@ class comboCodigo extends Conexion {
     }
 
   */  
-    public function cargarDatos_CodigoCurso($codigo_curso) {
+    public function cargarDatos_CodigoCursoPregunta() {
+        session_name("CampusVirtual");
+                        session_start();
         try {
-            $sql = "select 
+            if($_SESSION["tipo"] === "D")
+            {
+                $sql = "select 
                         curso_id,
                         nombre_curso
                     from 
                         curso 
                     where 
-                        curso_id = :p_curso_id";
-            $sentencia = $this->dblink->prepare($sql);
-            $sentencia->bindParam(":p_curso_id", $codigo_curso);
-            $sentencia->execute();
-            $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-            return $resultado;
-        } catch (Exception $exc) {
-            throw $exc;
-        }
-    }
+                        curso_id = $_SESSION[curso_id]";
 
-    public function cargarDatos_CodigoCursoPregunta() {
-        try {
-            $sql = "select                         
+                
+                //$sentencia->bindParam(":p_curso_id", $_SESSION["curso_id"]);
+            }else
+            {
+                $sql = "select                         
                         c.curso_id,
                         c.nombre_curso
                     from 
@@ -53,7 +50,9 @@ class comboCodigo extends Conexion {
                     on
                         c.curso_id = p.curso_id 
                     order by 
-                            1";
+                            1";            
+            }
+            
             $sentencia = $this->dblink->prepare($sql);
            // $sentencia->bindParam(":p_curso_id", $codigo_curso);
             $sentencia->execute();
