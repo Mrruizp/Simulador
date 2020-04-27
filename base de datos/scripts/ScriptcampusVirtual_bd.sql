@@ -694,6 +694,14 @@ declare
 											p_codigoCurso,
 											p_doc_id
 										);
+										
+										update 
+											correlativo 
+										set 
+											numero = numero + 1 
+										where 
+											tabla='detalle_docente_profesor';
+										
 								else
 								
 									update 
