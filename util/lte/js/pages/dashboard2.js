@@ -12,9 +12,9 @@ $(function () {
   //-----------------------
 
   // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
+  //var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
   // This will get the first returned node in the jQuery collection.
-  var salesChart = new Chart(salesChartCanvas);
+  //var salesChart = new Chart(salesChartCanvas);
 
   var salesChartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -82,7 +82,7 @@ $(function () {
   };
 
   //Create the line chart
-  salesChart.Line(salesChartData, salesChartOptions);
+  //salesChart.Line(salesChartData, salesChartOptions);
 
   //---------------------------
   //- END MONTHLY SALES CHART -

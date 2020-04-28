@@ -111,6 +111,11 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
         </div>  
         <!-- ./wrapper -->
         <?php include_once 'scripts.view.php'; ?>
+
+        <script src="../util/lte/js/pages/dashboard2.js"></script>
+        <script src="../util/lte/js/pages/dashboard.js"></script>
+
+        <script src="../util/plugins/chartjs/Chart.js"></script>
     <!--
         <script src="js/convocatoriaVigente.js" type="text/javascript"></script>
         <script src="js/convocatoriaConcluida.js" type="text/javascript"></script>

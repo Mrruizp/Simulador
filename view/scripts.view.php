@@ -30,10 +30,7 @@
 <!--<script src="../util/js/jquery-3.2.1.min.js" type="text/javascript"></script>-->
 <script src="../util/js/timer.jquery.min.js" type="text/javascript"></script>
 
-<!--<script src="../util/lte/js/pages/dashboard2.js"></script>-->
-<!--<script src="../util/lte/js/pages/dashboard.js"></script>-->
 
-<script src="../util/plugins/chartjs/Chart.js"></script>
 
 <!--<script>
     (function(){
