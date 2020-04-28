@@ -1050,7 +1050,7 @@ $$
 declare
 con int;
 begin
-					select numiniciosesion into con from usuario where doc_id = '44444444';
+					select numiniciosesion into con from usuario where doc_id = p_doc_id;
 					
 					if con is null then
 						
@@ -1085,6 +1085,7 @@ respUsuaNull integer;
 p_porcentaje_alumno float; -- Porcentaje obtenido del examen
 p_descripcion character varying(50);
 p_promedio_idd float;
+con int;
 
 begin
 							-- verifica si este algún registro de promedio
@@ -1174,6 +1175,26 @@ begin
 										tabla='promedio';
 							end if;
 						end if;
+						
+							select numexamencalificado into con from usuario where doc_id = p_doc_id;
+
+						if con is null then
+
+							update 
+								usuario
+							set 
+								numexamencalificado = 0
+							where 
+								doc_id = p_doc_id;
+
+						end if;
+
+						update 
+							usuario
+						set 
+							numexamencalificado = numexamencalificado + 1
+						where 
+							doc_id = p_doc_id;
 
 end
 $$ language plpgsql;	
