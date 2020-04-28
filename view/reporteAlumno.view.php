@@ -84,7 +84,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                             <div class="box-footer no-padding">
                                               <ul class="nav nav-pills nav-stacked">
                                                 <li class=""><a href="#">Iniciarón Sesión
-                                                  <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                                                  <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 80%</span></a></li>
                                                 <li><a href="#">Sin Iniciar Sesión <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
                                                 </li>
                                               </ul>

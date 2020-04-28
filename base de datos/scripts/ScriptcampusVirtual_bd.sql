@@ -23,12 +23,14 @@ CREATE TABLE USUARIO
    -- edad char(2) not null,
     email character varying(150) not null,
     cargo_id integer,
+	numInicioSesion int;
+	numExamenCalificado int;
+	mumAprobado int;
+	mumDesaprobado int,
     constraint pk_usuario_doc_id primary key(doc_id),
     constraint fk_usuario_cargo_id foreign key(cargo_id) references cargo(cargo_id),
 	CONSTRAINT uni_email UNIQUE (email)
 );
- -- alter table USUARIO
- -- drop column edad
 
 -- select * from CREDENCIALES_ACCESO
 CREATE TABLE CREDENCIALES_ACCESO
@@ -1039,11 +1041,37 @@ select * from fn_RegistrarRespuestaUsuario
 									);
 
 -- FUNCIÓN REGISTRAR caificarUsuaNull
-select * from fn_calificarExamenNull
+select * from fn_numSesion
 											(
-												'45977448',
-												1
+												'44444444'
 											);
+CREATE OR REPLACE FUNCTION fn_numSesion(p_doc_id character varying(20))returns void as
+$$
+declare
+con int;
+begin
+					select numiniciosesion into con from usuario where doc_id = '44444444';
+					
+					if con is null then
+						
+						update 
+							usuario
+						set 
+							numiniciosesion = 0
+						where 
+							doc_id = p_doc_id;
+							
+					end if;
+					
+					update 
+						usuario
+					set 
+						numiniciosesion = numiniciosesion + 1
+					where 
+						doc_id = p_doc_id;
+end
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION fn_calificarExamenNull
 											(
 												p_doc_id character varying(20),

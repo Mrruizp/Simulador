@@ -6,6 +6,7 @@ class Sesion extends Conexion {
 
     private $email;
     private $clave;
+    private $Numiniciosesion;
 
     public function getEmail() {
         return $this->email;
@@ -15,12 +16,20 @@ class Sesion extends Conexion {
         return $this->clave;
     }
 
+    public function getNuminiciosesion() {
+        return $Numiniciosesion->Numiniciosesion;
+    }
+
     public function setEmail($email) {
         $this->email = $email;
     }
 
     public function setClave($clave) {
         $this->clave = $clave;
+    }
+
+    public function setNuminiciosesion($Numiniciosesion) {
+        $this->Numiniciosesion = $Numiniciosesion;
     }
 
     public function iniciarSesion() {
@@ -76,8 +85,10 @@ class Sesion extends Conexion {
                         $_SESSION["cargo"] = $resultado["cargo"]; // descripción del cargo
                         $_SESSION["tipo"] = $resultado["tipo"]; // tipo de usuario rol
                         $_SESSION["curso_id"] = $resultado["curso_id"]; // tipo de usuario rol
-
+                        
+                        //this.numInicioSsion();
                         return "SI"; //Si ingresa
+                        //numInicioSsion($_SESSION["s_doc_id"]);
                     }
                 } else { //la contraseña no es igual
                     return "CI"; //Contraseña incorrecta
@@ -88,6 +99,35 @@ class Sesion extends Conexion {
         } catch (Exception $exc) {
             throw $exc;
         }
+    }
+    public function numInicioSsion()
+    {
+        session_name("CampusVirtual");
+                        session_start();
+        $this->dblink->beginTransaction();
+        
+        
+        try {
+                /* Insertar en la tabla laboratorio */
+                $sql = "
+                        select * from fn_numSesion
+                                            (
+                                                '$_SESSION[s_doc_id]'
+                                            );
+                    ";
+                $sentencia = $this->dblink->prepare($sql);
+               // $sentencia->bindParam(":p_numiniciosesion", $this->getNuminiciosesion());
+                $sentencia->execute();
+                
+                $this->dblink->commit();
+                return true;
+          
+        } catch (Exception $exc) {
+            $this->dblink->rollBack();
+            throw $exc;
+        }
+
+        return false;
     }
     public function obtenerOpcionesMenu($codigoCargo) {
         try {

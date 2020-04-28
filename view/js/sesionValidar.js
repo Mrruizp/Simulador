@@ -91,9 +91,8 @@ $("#frmgrabar1").submit(function (event) {
                                     break;
 
                                 default: //SI
-                                location.href = "../view/pruebaSimulador.view.php";
-                                swal("Iniciando Sesión", "", "success");
-                                    
+                                numSesion();
+                                
                                 break;
                             }
                         //}
@@ -107,4 +106,30 @@ $("#frmgrabar1").submit(function (event) {
            
 
 });
+
+function numSesion()
+{
+
+    $.post
+            (
+                    "../controller/numSesion.agregar.controller.php"
+
+                    ).done(function (resultado) {
+        var datosJSON = resultado;
+
+        if (datosJSON.estado === 200) {
+            location.href = "../view/pruebaSimulador.view.php";
+                                swal("Iniciando Sesión", "", "success");
+                
+
+
+        } else {
+            //swal("Mensaje del sistema", resultado , "warning");
+        }
+
+    }).fail(function (error) {
+        var datosJSON = $.parseJSON(error.responseText);
+        //swal("Error", datosJSON.mensaje , "error"); 
+    });
+}
 
