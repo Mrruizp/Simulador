@@ -400,6 +400,26 @@ set
 	acceso = '2'
 where codigo_menu = 6 and codigo_menu_item = 13 and cargo_id = 5;
 
+-- actualización para menú reporte
+
+insert into menu(codigo_menu,nombre)
+values(7,'Reporte')
+
+insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
+values(7,15,'Alumno','reporteAlumno.view.php');
+
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,15,1,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,15,2,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,15,3,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,15,4,1); 
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,15,5,1);
+
+
 --------------------
 
 

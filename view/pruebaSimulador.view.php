@@ -58,7 +58,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                
                                                 <?php
                                                     $total_imagenes = count(glob('fotos/anuncios/{*.jpg}',GLOB_BRACE));
-                                                    if($_SESSION["cargo"] !== "Docente")
+                                                    if($_SESSION["cargo"] !== "Docente" && $_SESSION["cargo"] !== "Estudiante")
                                                     {
                                                        for($i = 1; $i <= $total_imagenes; $i ++) 
                                                        {

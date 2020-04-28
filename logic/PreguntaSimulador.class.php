@@ -31,7 +31,7 @@ class PreguntaSimulador extends Conexion {
                                 on
                                     pr.pregunta_id = r.pregunta_id
                                 where
-                                    prueba_id = 1
+                                    prueba_id = $codPrueba
                              ) t
                         ORDER BY random()
                         LIMIT 7;

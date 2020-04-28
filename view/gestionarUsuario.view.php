@@ -224,7 +224,7 @@
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <p>
-                                                        ¿Dicta Curso? (*)
+                                                        ¿Agregar Curso? (*)
                                                         <select size="1" style="font-weight:normal;" id="status" name="status" class="form-control has-feedback-left" required onChange="mostrarAddCurso(this.value);"> 
                                                             <option></option>
                                                             <option value="S">Si</option>
