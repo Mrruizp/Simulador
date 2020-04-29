@@ -3,6 +3,7 @@
 require_once '../data/Conexion.class.php';
 
 class Usuario extends Conexion {
+
     private $CodigoUsuario;
     private $Dni;
     private $P_foto;
@@ -167,8 +168,7 @@ class Usuario extends Conexion {
                         c.clave,
                         c.tipo,
                         c.estado,
-                        d.curso_id,
-                        u.numiniciosesion
+                        d.curso_id
                         
                     from usuario u inner join credenciales_acceso c
                     on
@@ -181,6 +181,57 @@ class Usuario extends Conexion {
             
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numInicioSesion() {
+      //  session_name("CampusVirtual");
+   // session_start();
+        try {
+            $sql = "
+                    select 
+                        count(*) as numsesion
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numiniciosesion is not null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numNoInicioSesion() {
+        
+        try {
+            $sql = "
+                    select 
+                        count(*) as numnosesion
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numiniciosesion is null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
             $sentencia->execute();
             $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
             return $resultado;

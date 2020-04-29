@@ -75,17 +75,18 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                     <a href="#">Iniciarón Sesión
                                                       <span class="pull-right text-green">
                                                         <i class="fa fa-angle-down"></i> 
-                                                            <!--<input type="hidden" id="numSesion" name="numSesion" value="<?php echo $resultado["numiniciosesion"];  ?>"><?php echo $resultado["numiniciosesion"];  ?>-->
-                                                            <input type="hidden" id="numSesion" name="numSesion" value="10">10
+                                                            <input type="hidden" id="numSesion" name="numSesion" value="<?php echo $resultado2["numsesion"];  ?>"><?php echo $resultado2["numsesion"]; ?>
+                                                            <!--<input type="hidden" id="numSesion" name="numSesion" value="10"><?php echo $resul["numsesion"];  ?>-->
                                                         </span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Sin Iniciar Sesión 
+                                                    <a href="#">No Iniciarón Sesión 
                                                         <span class="pull-right text-red">
                                                             <i class="fa fa-angle-up">
                                                                 
-                                                            </i> 4%
+                                                            </i>
+                                                            <input type="hidden" id="numNoSesion" name="numNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
                                                         </span>
                                                     </a>
                                                 </li>
