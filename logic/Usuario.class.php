@@ -189,7 +189,7 @@ class Usuario extends Conexion {
         }
     }
 
-    public function numInicioSesion() {
+    public function numInicioSesion() {// número de estudiantes que han iniciado sesión filtrado por curso
       //  session_name("CampusVirtual");
    // session_start();
         try {
@@ -215,7 +215,7 @@ class Usuario extends Conexion {
         }
     }
 
-    public function numNoInicioSesion() {
+    public function numNoInicioSesion() {// número de estudiantes que no han iniciado sesión filtrado por curso
         
         try {
             $sql = "
@@ -227,6 +227,31 @@ class Usuario extends Conexion {
                         u.doc_id = d.doc_id
                     where
                         d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numiniciosesion is null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numUtilizadoExamen() {//número de estudiantes que han dado el examen del simular
+        
+        try {
+            $sql = "
+                    select 
+                        count(numexamencalificado) as numexcali
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numiniciosesion is not null;
 
                 ";
             

@@ -43,7 +43,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                             <!-- Main content -->
                             <section class="invoice">
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-xs-6">
                                       <h2 class="page-header text-primary text-bold">
                                         <i class="fa fa-pie-chart"></i> Alumno
                                         <!--<small class="pull-right">Fecha: <?php echo date('d/m/yy'); ?></small>-->
@@ -51,56 +51,111 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                     </div>
                               </div>
                               <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="box-header with-border">
-                                              <h3 class="box-title">Ingresos al Sistema</h3>
+                                <div class="col-md-12 box box-default">
+                                    <div class="box-header with-border">
+                                      <h1 class="box-title">Ingresos al Sistema</h1>
 
-                                            </div>
-                                            <!-- /.box-header -->
-                                            <div class="box-body">
-                                              <div class="row">
-                                                <div class="col-md-8">
-                                                  <div class="chart-responsive">
-                                                    <canvas id="pieChart" height="150"></canvas>
-                                                  </div>
-                                                  <!-- ./chart-responsive -->
-                                                </div>
-                                              </div>
-                                              <!-- /.row -->
-                                            </div>
-                                            <!-- /.box-body -->
-                                            <div class="box-footer no-padding">
-                                              <ul class="nav nav-pills nav-stacked">
-                                                <li class="">
-                                                    <a href="#">Iniciarón Sesión
-                                                      <span class="pull-right text-green">
-                                                        <i class="fa fa-angle-down"></i> 
-                                                            <input type="hidden" id="numSesion" name="numSesion" value="<?php echo $resultado2["numsesion"];  ?>"><?php echo $resultado2["numsesion"]; ?>
-                                                            <!--<input type="hidden" id="numSesion" name="numSesion" value="10"><?php echo $resul["numsesion"];  ?>-->
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">No Iniciarón Sesión 
-                                                        <span class="pull-right text-red">
-                                                            <i class="fa fa-angle-up">
-                                                                
-                                                            </i>
-                                                            <input type="hidden" id="numNoSesion" name="numNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                            <!-- /.footer -->
-                                          </div>
-                                        </div>
                                     </div>
-                            </section>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </section>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="chart-responsive">
+                                            <canvas id="pieChart" height="250"></canvas>
+                                          </div>
+                                          <!-- ./chart-responsive -->
+                                        </div>
+                                      </div>
+                                      <!-- /.row -->
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer no-padding">
+                                      <ul class="nav nav-pills nav-stacked">
+                                        <li class="">
+                                            <a href="#"><h5>Iniciarón Sesión
+                                              <span class="pull-right text-green text-bold">
+                                                <i class="fa fa-angle-down"></i> 
+                                                    <input type="hidden" id="numSesion" name="numSesion" value="<?php echo $resultado2["numsesion"];  ?>"><?php echo $resultado2["numsesion"]; ?>
+                                                    <!--<input type="hidden" id="numSesion" name="numSesion" value="10"><?php echo $resul["numsesion"];  ?>-->
+                                                </span></h5>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><h5>No Iniciarón Sesión 
+                                                <span class="pull-right text-red text-bold">
+                                                    <i class="fa fa-angle-up">
+                                                        
+                                                    </i>
+                                                    <input type="hidden" id="numNoSesion" name="numNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
+                                                </span></h5>
+                                            </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- /.footer -->
+                                  </div>
+                                  <div class="col-md-12 box box-default">
+                                    <div class="box-header with-border">
+                                      <h2 class="box-title">Examen</h2>
+
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="chart-responsive">
+                                            <canvas id="pieChart2" height="250"></canvas>
+                                          </div>
+                                          <!-- ./chart-responsive -->
+                                        </div>
+                                      </div>
+                                      <!-- /.row -->
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer no-padding">
+                                      <ul class="nav nav-pills nav-stacked">
+                                        <li class="">
+                                            <a href="#"><h5>Dierón Examen
+                                              <span class="pull-right text-gray text-bold">
+                                                <i class="fa fa-angle-down"></i> 
+                                                    <input type="hidden" id="textNumexcali" name="textNumexcali" value="<?php echo $resultado4["numexcali"];  ?>"><?php echo $resultado4["numexcali"]; ?>
+                                                    <!--<input type="hidden" id="numSesion" name="numSesion" value="10"><?php echo $resul["numsesion"];  ?>-->
+                                                </span></h5>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><h5>Aprobados
+                                                <span class="pull-right text-yellow text-bold">
+                                                    <i class="fa fa-angle-up">
+                                                        
+                                                    </i>
+                                                    <input type="hidden" id="numNoSesion" name="numNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
+                                                </span></h5>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><h5>Desaprobados
+                                                <span class="pull-right text-light-blue text-bold">
+                                                    <i class="fa fa-angle-up">
+                                                        
+                                                    </i>
+                                                    <input type="hidden" id="numNoSesion" name="numNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
+                                                </span></h5>
+                                            </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- /.footer -->
+                                  </div>
+                                </div>
+
+                            </div>
+                    </section>
+                            
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
             </div>
             <!-- /.content-wrapper -->
             <!-- /.content-wrapper -->
@@ -116,15 +171,20 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
         <?php include_once 'scripts.view.php'; ?>
 
         <script src="../util/lte/js/pages/dashboard2.js"></script>
-        <script src="../util/lte/js/pages/dashboard.js"></script>
+        <!--<script src="../util/lte/js/pages/dashboard.js"></script>-->
 
         <script src="../util/plugins/chartjs/Chart.js"></script>
-    <!--
-        <script src="js/convocatoriaVigente.js" type="text/javascript"></script>
-        <script src="js/convocatoriaConcluida.js" type="text/javascript"></script>
-        <script src="js/reporte.resultadoCurriculo.js" type="text/javascript"></script>
-        <script src="js/reporte.resultadoPruebas.js" type="text/javascript"></script>
-        <script src="js/reporte.resultadoFinal.js" type="text/javascript"></script>
-    -->
+
+        <!-- FLOT CHARTS -->
+        <script src="../util/plugins/flot/jquery.flot.js"></script>
+        <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+        <script src="../util/plugins/flot/jquery.flot.resize.js"></script>
+        <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+        <script src="../util/plugins/flot/jquery.flot.pie.js"></script>
+        <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+        <script src="../util/plugins/flot/jquery.flot.categories.js"></script>
+        <!-- Page script -->
+        
+        
     </body>
 </html>

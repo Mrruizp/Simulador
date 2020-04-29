@@ -12,10 +12,19 @@ try {
     $objUsuario = new Usuario();
     $objUsuario2 = new Usuario();
     $objUsuario3 = new Usuario();
+    $objUsuario4 = new Usuario();
+    $objUsuario5 = new Usuario();
+    $objUsuario6 = new Usuario();
+
     $resultado = $objUsuario->leerDatos($dni);
 
     $resultado2 = $objUsuario2->numInicioSesion();
     $resultado3 = $objUsuario3->numNoInicioSesion();
+
+    $resultado4 = $objUsuario4->numUtilizadoExamen();
+    //$resultado5 = $objUsuario5->numNoInicioSesion();
+
+    //$resultado6 = $objUsuario6->numInicioSesion();
 /*
     echo '<pre>';
     print_r($resultado2);
