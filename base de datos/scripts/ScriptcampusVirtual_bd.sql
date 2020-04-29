@@ -25,8 +25,8 @@ CREATE TABLE USUARIO
     cargo_id integer,
 	numInicioSesion int;
 	numExamenCalificado int;
-	mumAprobado int;
-	mumDesaprobado int,
+	numAprobado int;
+	numDesaprobado int,
     constraint pk_usuario_doc_id primary key(doc_id),
     constraint fk_usuario_cargo_id foreign key(cargo_id) references cargo(cargo_id),
 	CONSTRAINT uni_email UNIQUE (email)
@@ -1086,7 +1086,9 @@ p_porcentaje_alumno float; -- Porcentaje obtenido del examen
 p_descripcion character varying(50);
 p_promedio_idd float;
 con int;
-
+con2 int;
+con3 int;
+p_des character varying(200);
 begin
 							-- verifica si este algún registro de promedio
 							select 
@@ -1139,7 +1141,7 @@ begin
 							else
 								select * into p_correlativo from f_generar_correlativo('promedio');
 								select 
-									((100 * sum(puntaje_correcto))/40) into p_porcentaje_alumno
+									((100 * sum(puntaje_correcto))/1) into p_porcentaje_alumno
 								from 
 									respuesta_pregunta_usuario r inner join pregunta p
 								on
@@ -1195,9 +1197,48 @@ begin
 							numexamencalificado = numexamencalificado + 1
 						where 
 							doc_id = p_doc_id;
+							
+						-- Contador para los usuarios desaprobados
+						
+						select numAprobado into con2 from usuario where doc_id = p_doc_id;
+						select numDesaprobado into con3 from usuario where doc_id = p_doc_id;
+						select descripcion into p_des from promedio where doc_id = p_doc_id;
+
+						if con2 is null  or con3 is null then
+
+							update 
+								usuario
+							set 
+								numAprobado = 0
+							where 
+								doc_id = p_doc_id;
+								
+							update 
+								usuario
+							set 
+								numDesaprobado = 0
+							where 
+								doc_id = p_doc_id;
+
+						end if;
+						if p_des = 'Aprobado' then
+							update 
+								usuario
+							set 
+								numaprobado = numaprobado + 1
+							where 
+								doc_id = p_doc_id;
+						else
+							update 
+								usuario
+							set 
+								numdesaprobado = numdesaprobado + 1
+							where 
+								doc_id = p_doc_id;
+						end if;
 
 end
-$$ language plpgsql;	
+$$ language plpgsql;
 
 -- Eliminar registro de respuestas y promedio
 CREATE OR REPLACE FUNCTION fn_eliminarRespuestaPromedio
