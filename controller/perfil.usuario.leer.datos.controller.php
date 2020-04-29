@@ -15,16 +15,21 @@ try {
     $objUsuario4 = new Usuario();
     $objUsuario5 = new Usuario();
     $objUsuario6 = new Usuario();
+    $objUsuario7 = new Usuario();
+    $objUsuario8 = new Usuario();
+    $objUsuario9 = new Usuario();
+    $objUsuario10 = new Usuario();
 
     $resultado = $objUsuario->leerDatos($dni);
-
-    $resultado2 = $objUsuario2->numInicioSesion();
-    $resultado3 = $objUsuario3->numNoInicioSesion();
-
-    $resultado4 = $objUsuario4->numUtilizadoExamen();
-    //$resultado5 = $objUsuario5->numNoInicioSesion();
-
-    //$resultado6 = $objUsuario6->numInicioSesion();
+    $resultado2  = $objUsuario2->numInicioSesion();
+    $resultado3  = $objUsuario3->numNoInicioSesion();
+    $resultado4  = $objUsuario4->numUtilizadoExamen();
+    $resultado5  = $objUsuario5->numAprobados();
+    $resultado6  = $objUsuario6->numDesAprobados();
+    $resultado7  = $objUsuario7->numInicioSesionDoc();
+    $resultado8  = $objUsuario8->numNoInicioSesionDoc();
+    $resultado9  = $objUsuario9->numUtilizadoExamenDoc();
+    $resultado10 = $objUsuario10->numNoUtilizadoExamenDoc();
 /*
     echo '<pre>';
     print_r($resultado2);

@@ -45,7 +45,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                 <div class="row">
                                     <div class="col-xs-6">
                                       <h2 class="page-header text-primary text-bold">
-                                        <i class="fa fa-pie-chart"></i> Alumno
+                                        <i class="fa fa-pie-chart"></i> Docente
                                         <!--<small class="pull-right">Fecha: <?php echo date('d/m/yy'); ?></small>-->
                                       </h2>
                                     </div>
@@ -61,7 +61,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                       <div class="row">
                                         <div class="col-md-12">
                                           <div class="chart-responsive">
-                                            <canvas id="pieChart" height="250"></canvas>
+                                            <canvas id="pieChart3" height="250"></canvas>
                                           </div>
                                           <!-- ./chart-responsive -->
                                         </div>
@@ -75,17 +75,17 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                             <a href="#"><h5>Número de veces que iniciarón sesión
                                               <span class="pull-right text-green text-bold">
                                                 <i class="fa fa-angle-down"></i> 
-                                                    <input type="hidden" id="textNumSesion" name="textNumSesion" value="<?php echo $resultado2["numsesion"];  ?>"><?php echo $resultado2["numsesion"]; ?>
+                                                    <input type="hidden" id="textNumSesionDoc" name="textNumSesionDoc" value="<?php echo $resultado7["numsesiondoc"];  ?>"><?php echo $resultado7["numsesiondoc"]; ?>
                                                 </span></h5>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#"><h5>Estudiante(s) sin iniciar sesión 
+                                            <a href="#"><h5>Docente(s) sin iniciar sesión 
                                                 <span class="pull-right text-yellow text-bold">
                                                     <i class="fa fa-angle-up">
                                                         
                                                     </i>
-                                                    <input type="hidden" id="textNumNoSesion" name="textNumNoSesion" value="<?php echo $resultado3["numnosesion"];  ?>"><?php echo $resultado3["numnosesion"]; ?>
+                                                    <input type="hidden" id="textNumNoSesionDoc" name="textNumNoSesionDoc" value="<?php echo $resultado8["numnosesiondoc"];  ?>"><?php echo $resultado8["numnosesiondoc"]; ?>
                                                 </span></h5>
                                             </a>
                                         </li>
@@ -103,7 +103,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                       <div class="row">
                                         <div class="col-md-12">
                                           <div class="chart-responsive">
-                                            <canvas id="pieChart2" height="250"></canvas>
+                                            <canvas id="pieChart4" height="250"></canvas>
                                           </div>
                                           <!-- ./chart-responsive -->
                                         </div>
@@ -117,28 +117,18 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                             <a href="#"><h5>Número de veces que dierón examen
                                               <span class="pull-right text-gray text-bold">
                                                 <i class="fa fa-angle-down"></i> 
-                                                    <input type="hidden" id="textNumexcali" name="textNumexcali" value="<?php echo $resultado4["numexcali"];  ?>"><?php echo $resultado4["numexcali"]; ?>
+                                                    <input type="hidden" id="textNumexcaliDoc" name="textNumexcaliDoc" value="<?php echo $resultado9["numexcalidoc"];  ?>"><?php echo $resultado9["numexcalidoc"]; ?>
                                                     <!--<input type="hidden" id="numSesion" name="numSesion" value="10"><?php echo $resul["numsesion"];  ?>-->
                                                 </span></h5>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#"><h5>Número de veces que aprobaron
+                                            <a href="#"><h5>Docente(s) sin dar examen
                                                 <span class="pull-right text-light-blue text-bold">
                                                     <i class="fa fa-angle-up">
                                                         
                                                     </i>
-                                                    <input type="hidden" id="textNumapro" name="textNumapro" value="<?php echo $resultado5["numapro"];  ?>"><?php echo $resultado5["numapro"]; ?>
-                                                </span></h5>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><h5>Número de veces que desaprobaron
-                                                <span class="pull-right text-yellow text-bold">
-                                                    <i class="fa fa-angle-up">
-                                                        
-                                                    </i>
-                                                    <input type="hidden" id="textNumdesapro" name="textNumdesapro" value="<?php echo $resultado6["numdesapro"];  ?>"><?php echo $resultado6["numdesapro"]; ?>
+                                                    <input type="hidden" id="textNumexNocaliDoc" name="textNumexNocaliDoc" value="<?php echo $resultado10["numnoexcalidoc"];  ?>"><?php echo $resultado10["numnoexcalidoc"]; ?>
                                                 </span></h5>
                                             </a>
                                         </li>
@@ -169,7 +159,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
         <!-- ./wrapper -->
         <?php include_once 'scripts.view.php'; ?>
 
-        <script src="../util/lte/js/pages/dashboard2.js"></script>
+        <script src="../util/lte/js/pages/dashboard3.js"></script>
         <!--<script src="../util/lte/js/pages/dashboard.js"></script>-->
 
         <script src="../util/plugins/chartjs/Chart.js"></script>

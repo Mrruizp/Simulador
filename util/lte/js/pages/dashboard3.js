@@ -92,80 +92,28 @@ $(function () {
   //- PIE CHART -
   //-------------
   // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-  var pieChart = new Chart(pieChartCanvas);
-  var PieData = [
+  
+  //-----------------
+  //- PIE CHART3 -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var pieChartCanvas3 = $("#pieChart3").get(0).getContext("2d");
+  var pieChart3 = new Chart(pieChartCanvas3);
+  var PieData3 = [
     {
-      value: $("#textNumSesion").val(),
+      value: $("#textNumSesionDoc").val(),
       color: "#00a65a",
       highlight: "#00a65a",
       label: "veces iniciarón sesión"
     },
     {
-      value: $("#textNumNoSesion").val(),
+      value: $("#textNumNoSesionDoc").val(),
       color: "#f39c12",
       highlight: "#f39c12",
-      label: "estudiante(s), sin iniciar sesión"
+      label: "docente(s), sin iniciar sesión"
     }
   ];
-  var pieOptions = {
-    //Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke: true,
-    //String - The colour of each segment stroke
-    segmentStrokeColor: "#fff",
-    //Number - The width of each segment stroke
-    segmentStrokeWidth: 1,
-    //Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 50, // This is 0 for Pie charts
-    //Number - Amount of animation steps
-    animationSteps: 100,
-    //String - Animation easing effect
-    animationEasing: "easeOutBounce",
-    //Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate: true,
-    //Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale: false,
-    //Boolean - whether to make the chart responsive to window resizing
-    responsive: true,
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio: false,
-    //String - A legend template
-    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
-    //String - A tooltip template
-    tooltipTemplate: "<%=value %> <%=label%>"
-  };
-  //Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  pieChart.Doughnut(PieData, pieOptions);
-  //-----------------
-  //- END PIE CHART -
-  //-----------------
-  //- PIE CHART2 -
-  //-------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas2 = $("#pieChart2").get(0).getContext("2d");
-  var pieChart2 = new Chart(pieChartCanvas2);
-  var PieData2 = [
-    {
-      value: $("#textNumexcali").val(),
-      color: "#d2d6de",
-      highlight: "#d2d6de",
-      label: "Dierón Examen"
-    },
-    {
-      value: $("#textNumapro").val(),
-      color: "#00c0ef",
-      highlight: "#00c0ef",
-      label: "Aprobados"
-    },
-    {
-      value: $("#textNumdesapro").val(),
-      color: "#f39c12",
-      highlight: "#f39c12",
-      label: "Desaprobados"
-    }
-  ];
-  var pieOptions2 = {
+  var pieOptions3 = {
     //Boolean - Whether we should show a stroke on each segment
     segmentShowStroke: true,
     //String - The colour of each segment stroke
@@ -193,9 +141,60 @@ $(function () {
   };
   //Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.
-  pieChart2.Doughnut(PieData2, pieOptions2);
+  pieChart3.Doughnut(PieData3, pieOptions3);
   //-----------------
-  //- END PIE CHART 2-
+  //- END PIE CHART 3-
+  //-----------------
+  //- PIE CHART3 -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var pieChartCanvas4 = $("#pieChart4").get(0).getContext("2d");
+  var pieChart4 = new Chart(pieChartCanvas4);
+  var PieData4 = [
+    {
+      value: $("#textNumexcaliDoc").val(),
+      color: "#00a65a",
+      highlight: "#00a65a",
+      label: "Dierón examen"
+    },
+    {
+      value: $("#textNumexNocaliDoc").val(),
+      color: "#f39c12",
+      highlight: "#f39c12",
+      label: "Sin dar examen"
+    }
+  ];
+  var pieOptions4 = {
+    //Boolean - Whether we should show a stroke on each segment
+    segmentShowStroke: true,
+    //String - The colour of each segment stroke
+    segmentStrokeColor: "#fff",
+    //Number - The width of each segment stroke
+    segmentStrokeWidth: 1,
+    //Number - The percentage of the chart that we cut out of the middle
+    percentageInnerCutout: 50, // This is 0 for Pie charts
+    //Number - Amount of animation steps
+    animationSteps: 100,
+    //String - Animation easing effect
+    animationEasing: "easeOutBounce",
+    //Boolean - Whether we animate the rotation of the Doughnut
+    animateRotate: true,
+    //Boolean - Whether we animate scaling the Doughnut from the centre
+    animateScale: false,
+    //Boolean - whether to make the chart responsive to window resizing
+    responsive: true,
+    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio: false,
+    //String - A legend template
+    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+    //String - A tooltip template
+    tooltipTemplate: "<%=value %>, <%=label%>"
+  };
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  pieChart4.Doughnut(PieData4, pieOptions4);
+  //-----------------
+  //- END PIE CHART 4-
   //-----------------
   /* jVector Maps
    * ------------

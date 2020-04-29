@@ -195,7 +195,7 @@ class Usuario extends Conexion {
         try {
             $sql = "
                     select 
-                        count(*) as numsesion
+                        sum(u.numiniciosesion) as numsesion
                     from
                         usuario u inner join detalle_docente_profesor d
                     on
@@ -240,18 +240,171 @@ class Usuario extends Conexion {
         }
     }
 
-    public function numUtilizadoExamen() {//número de estudiantes que han dado el examen del simular
-        
+
+
+    public function numInicioSesionDoc() {// número de docentes que han iniciado sesión
+      //  session_name("CampusVirtual");
+   // session_start();
         try {
             $sql = "
                     select 
-                        count(numexamencalificado) as numexcali
+                        sum(u.numiniciosesion) as numsesiondoc
                     from
                         usuario u inner join detalle_docente_profesor d
                     on
                         u.doc_id = d.doc_id
                     where
-                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numiniciosesion is not null;
+                        u.cargo_id = 5 and u.numiniciosesion is not null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numNoInicioSesionDoc() {// número de docentes que no han iniciado
+        
+        try {
+            $sql = "
+                    select 
+                        count(*) as numnosesiondoc
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        u.cargo_id = 5 and u.numiniciosesion is null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+     public function numUtilizadoExamenDoc() {//número de docentes que han dado el examen del simular
+        
+        try {
+            $sql = "
+                    select 
+                        count(*) as numexcalidoc
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        u.cargo_id = 5 and u.numexamencalificado is not null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numNoUtilizadoExamenDoc() {//número de docentes que han dado el examen del simular
+        
+        try {
+            $sql = "
+                    select 
+                        count(*) as numnoexcalidoc
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        u.cargo_id = 5 and u.numexamencalificado is null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numUtilizadoExamen() {//número de estudiantes que han dado el examen del simular
+        
+        try {
+            $sql = "
+                    select 
+                        sum(numexamencalificado) as numexcali
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numexamencalificado is not null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numAprobados() {//número de estudiantes aprobados
+        
+        try {
+            $sql = "
+                    select 
+                        sum(numaprobado) as numapro
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numaprobado is not null;
+
+                ";
+            
+            $sentencia = $this->dblink->prepare($sql);
+            //$sentencia->bindParam(":p_dni", $p_dni);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+            return $resultado;
+        } catch (Exception $exc) {
+            throw $exc;
+        }
+    }
+
+    public function numDesAprobados() {//número de estudiantes desaprobados
+        
+        try {
+            $sql = "
+                    select 
+                        sum(numdesaprobado) as numdesapro
+                    from
+                        usuario u inner join detalle_docente_profesor d
+                    on
+                        u.doc_id = d.doc_id
+                    where
+                        d.curso_id = $_SESSION[curso_id] and u.cargo_id = 6 and u.numdesaprobado is not null;
 
                 ";
             

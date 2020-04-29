@@ -421,7 +421,19 @@ values(7,15,4,1);
 insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
 values(7,15,5,1);
 
+-- 29042020
 
+insert into menu_item(codigo_menu,codigo_menu_item,nombre,archivo)
+values(7,16,'Docente','reporteDocente.view.php');
+
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,16,1,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,16,2,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,16,3,1);
+insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
+values(7,16,4,1);
 --------------------
 
 
