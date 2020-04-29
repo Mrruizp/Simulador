@@ -167,7 +167,8 @@ class Usuario extends Conexion {
                         c.clave,
                         c.tipo,
                         c.estado,
-                        d.curso_id
+                        d.curso_id,
+                        u.numiniciosesion
                         
                     from usuario u inner join credenciales_acceso c
                     on

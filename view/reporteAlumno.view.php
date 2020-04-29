@@ -53,7 +53,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                               <div class="row">
                                         <div class="col-md-6">
                                             <div class="box-header with-border">
-                                              <h3 class="box-title">Uso del Simulador</h3>
+                                              <h3 class="box-title">Ingresos al Sistema</h3>
 
                                             </div>
                                             <!-- /.box-header -->
@@ -65,27 +65,29 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                                   </div>
                                                   <!-- ./chart-responsive -->
                                                 </div>
-                                                <!-- /.col -->
-                                                <div class="col-md-4">
-                                                  <ul class="chart-legend clearfix">
-                                                    <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                                                    <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                                                    <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                                                    <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                                                    <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                                                    <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
-                                                  </ul>
-                                                </div>
-                                                <!-- /.col -->
                                               </div>
                                               <!-- /.row -->
                                             </div>
                                             <!-- /.box-body -->
                                             <div class="box-footer no-padding">
                                               <ul class="nav nav-pills nav-stacked">
-                                                <li class=""><a href="#">Iniciarón Sesión
-                                                  <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 80%</span></a></li>
-                                                <li><a href="#">Sin Iniciar Sesión <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
+                                                <li class="">
+                                                    <a href="#">Iniciarón Sesión
+                                                      <span class="pull-right text-green">
+                                                        <i class="fa fa-angle-down"></i> 
+                                                            <!--<input type="hidden" id="numSesion" name="numSesion" value="<?php echo $resultado["numiniciosesion"];  ?>"><?php echo $resultado["numiniciosesion"];  ?>-->
+                                                            <input type="hidden" id="numSesion" name="numSesion" value="10">10
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Sin Iniciar Sesión 
+                                                        <span class="pull-right text-red">
+                                                            <i class="fa fa-angle-up">
+                                                                
+                                                            </i> 4%
+                                                        </span>
+                                                    </a>
                                                 </li>
                                               </ul>
                                             </div>

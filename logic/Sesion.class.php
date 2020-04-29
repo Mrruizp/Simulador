@@ -47,7 +47,8 @@ class Sesion extends Conexion {
                             c.descripcion as cargo,
                             c.cargo_id,
                             r.tipo,
-                            d.curso_id
+                            d.curso_id,
+                            u.numiniciosesion
                     from
                             cargo c inner join usuario u 
                     on 
@@ -85,6 +86,7 @@ class Sesion extends Conexion {
                         $_SESSION["cargo"] = $resultado["cargo"]; // descripción del cargo
                         $_SESSION["tipo"] = $resultado["tipo"]; // tipo de usuario rol
                         $_SESSION["curso_id"] = $resultado["curso_id"]; // tipo de usuario rol
+                        $_SESSION["numiniciosesion"] = $resultado["numiniciosesion"]; // tipo de usuario rol
                         
                         //this.numInicioSsion();
                         return "SI"; //Si ingresa

@@ -1141,7 +1141,7 @@ begin
 							else
 								select * into p_correlativo from f_generar_correlativo('promedio');
 								select 
-									((100 * sum(puntaje_correcto))/1) into p_porcentaje_alumno
+									((100 * sum(puntaje_correcto))/40) into p_porcentaje_alumno
 								from 
 									respuesta_pregunta_usuario r inner join pregunta p
 								on
