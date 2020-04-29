@@ -124,7 +124,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                         </li>
                                         <li>
                                             <a href="#"><h5>Docente(s) sin dar examen
-                                                <span class="pull-right text-light-blue text-bold">
+                                                <span class="pull-right text-yellow text-bold">
                                                     <i class="fa fa-angle-up">
                                                         
                                                     </i>

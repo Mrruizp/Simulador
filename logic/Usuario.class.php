@@ -298,7 +298,7 @@ class Usuario extends Conexion {
         try {
             $sql = "
                     select 
-                        count(*) as numexcalidoc
+                        count(numexamencalificado) as numexcalidoc
                     from
                         usuario u inner join detalle_docente_profesor d
                     on

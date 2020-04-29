@@ -153,15 +153,15 @@ $(function () {
   var PieData4 = [
     {
       value: $("#textNumexcaliDoc").val(),
-      color: "#00a65a",
-      highlight: "#00a65a",
-      label: "Dierón examen"
+      color: "#d2d6de",
+      highlight: "#d2d6de",
+      label: "vez(ces), dierón examen"
     },
     {
       value: $("#textNumexNocaliDoc").val(),
       color: "#f39c12",
       highlight: "#f39c12",
-      label: "Sin dar examen"
+      label: "vez(ces), sin dar examen"
     }
   ];
   var pieOptions4 = {

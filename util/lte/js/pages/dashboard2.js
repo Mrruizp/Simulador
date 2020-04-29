@@ -99,7 +99,7 @@ $(function () {
       value: $("#textNumSesion").val(),
       color: "#00a65a",
       highlight: "#00a65a",
-      label: "veces iniciarón sesión"
+      label: "vez(ces), iniciarón sesión"
     },
     {
       value: $("#textNumNoSesion").val(),
@@ -150,19 +150,19 @@ $(function () {
       value: $("#textNumexcali").val(),
       color: "#d2d6de",
       highlight: "#d2d6de",
-      label: "Dierón Examen"
+      label: "vez(ces), dierón examen"
     },
     {
       value: $("#textNumapro").val(),
       color: "#00c0ef",
       highlight: "#00c0ef",
-      label: "Aprobados"
+      label: "vez(ces), aprobaron"
     },
     {
       value: $("#textNumdesapro").val(),
       color: "#f39c12",
       highlight: "#f39c12",
-      label: "Desaprobados"
+      label: "vez(ces), desaprobaron"
     }
   ];
   var pieOptions2 = {
@@ -189,7 +189,7 @@ $(function () {
     //String - A legend template
     legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
     //String - A tooltip template
-    tooltipTemplate: "<%=value %>, <%=label%>"
+    tooltipTemplate: "<%=value %> <%=label%>"
   };
   //Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.
