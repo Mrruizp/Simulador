@@ -496,7 +496,27 @@ class Usuario extends Conexion {
                         where tabla='credenciales_acceso'";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->execute();
-                /*Actualizar el correlativo*/
+                
+                /*Actualizar el log_usuario*/
+                $sql = "insert * from fn_insert_log_usuario
+                                    (
+                                        usuarioqueregistra_doc_id, 
+                                        usuarioqueregistra_nombres, 
+                                        usuarioqueregistra_apellidos, 
+                                        usuarioqueregistra_cargo, 
+                                        usuarioqueregistra_tipo, 
+                                        doc_id, 
+                                        nombres, 
+                                        apellidos, 
+                                        direccion, 
+                                        telefono, 
+                                        email, 
+                                        cargo_id, 
+                                        tipo_operacion
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->execute();
+
                 $this->dblink->commit();
                 return true;
                 

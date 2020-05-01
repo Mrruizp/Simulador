@@ -179,8 +179,99 @@ CREATE TABLE correlativo
   constraint fk_detalle_docente_profesor_curso_id foreign key(curso_id) references curso(curso_id),
   constraint fk_detalle_docente_profesor_doc_id foreign key(doc_id) references usuario(doc_id)	  
   );
+  
+  -- tabla para el historial de log inicio sesión
+  CREATE TABLE log_inicioSeseion
+  (
+  	doc_id character varying(20) not null,
+    nombres character varying(50) not null,
+    apellidos character varying(50) not null,
+	cargo character varying(50) not null,
+	tipo char(1) not null,
+	fecha character varying(50) not null,
+	tiempo character varying(50) not null,
+	ip character varying(200) not null
+  );
+  
+    -- tabla para el historial de log 
+  CREATE TABLE log_usuario
+  (
+	usuarioQueRegistra_doc_id character varying(20) not null,
+    usuarioQueRegistra_nombres character varying(50) not null,
+    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_cargo character varying(50) not null,
+	usuarioQueRegistra_tipo char(1) not null,	  
+  	doc_id character varying(20) not null,
+    nombres character varying(50) not null,
+    apellidos character varying(50) not null,
+	direccion character varying(200) not null,
+    telefono character varying(25) not null,
+    email character varying(150) not null,
+    cargo_id integer,
+	tipo_operacion character varying(100)
+  );
+  
+  CREATE TABLE log_credenciales_acceso
+ ( 	
+	codigo_usuario integer not null,
+	clave character(32) not NULL,
+	tipo char(1) not null, -- Amin: A, Docente: D, Estudiante: E
+	estado char(1),
+    fecha_registro varchar(50),
+    doc_ID varchar(20)    
+ );
+  -- drop table log_usuario
+  CREATE TABLE log_curso
+  (
+	usuarioQueRegistra_doc_id character varying(20) not null,
+    usuarioQueRegistra_nombres character varying(50) not null,
+    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_cargo character varying(50) not null,
+	curso_id integer not null,
+	nombre_curso varchar(200) not null,
+	tipo_operacion character varying(100)
+  );
+  -- drop table log_prueba
+  CREATE TABLE log_prueba
+(
+	usuarioQueRegistra_doc_id character varying(20) not null,
+    usuarioQueRegistra_nombres character varying(50) not null,
+    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_cargo character varying(50) not null,
+	prueba_id integer not null,
+    cant_preguntas character varying(4) not null,
+    tiempo_prueba character varying(50) not null,
+    puntaje_aprobacion int not null,
+    instrucciones character varying(500) not null,
+    curso_id integer
+);
+	-- drop table log_pregunta
+CREATE TABLE log_pregunta
+(
+	usuarioQueRegistra_doc_id character varying(20) not null,
+    usuarioQueRegistra_nombres character varying(50) not null,
+    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_cargo character varying(50) not null,
+	pregunta_id integer not null,
+    nombre_pregunta character varying(12000) not null,
+    alternativa1 character varying(500),
+	alternativa2 character varying(500),
+	alternativa3 character varying(500),
+	alternativa4 character varying(500),
+	respuesta character varying(500),
+    prueba_id integer
+);
+CREATE TABLE log_detalle_docente_profesor
+  (
+  detalle_docente_profesor_id integer,
+  curso_id int,
+  doc_id character varying(20)
+  );
+-- drop table log_usuario_curso_evento
+
+-- drop table log_usuario_curso_evento;
  
- select * from detalle_docente_profesor
+-- select * from CURSO
  
  -- Registros
  -- Menú
@@ -1312,35 +1403,145 @@ begin
 							
 end
 $$ language plpgsql;
-*/
-select * from fn_registrarPregunta
-                                            (
-                                            2,
-                                            'ffffffffffffffffffff',
-                                            'a',
-                                            1
-                                            );
-select * from correlativo
 
-select * from f_generar_correlativo('pregunta') as nc
+-- select * from log_usuario;
+-- select * from credenciales_acceso;
 
-insert into pregunta(pregunta_id,nombre_pregunta,respuesta,prueba_id)
-values(1,'aaaaaaaaaaaaaaabbbbbbb','a',1)
+CREATE OR REPLACE FUNCTION fn_insert_log_inicioseseion
+											(
+											p_email character varying(150),
+											p_cargo character varying(50),
+											p_tipo char(1),
+											p_ip character varying(100)
+											)returns void as
+$$
+declare
+	p_doc_id character varying(20):= (select doc_id from usuario where email = p_email);
+	p_nombres character varying(50):= (select nombres from usuario where email = p_email);
+	p_apellidos character varying(50):= (select apellidos from usuario where email = p_email);
 	
-	select * from fn_registrarEditarPrueba
-                                    (
-                                        1,
-                                        '45',
-                                        '45',
-                                        '45',
-                                        'hawei p300',
-                                        1
-                                    );
-				
-				
-				UPDATE correlativo
-						SET 
-							numero = 1
-						WHERE
-							tabla = 'pregunta'
+	-- p_cargo_id int:= (select cargo_id from cargo where doc_id = p_doc_id);
+	-- p_tipo char(1):= (select tipo from credenciales_acceso where email = p_email);
+	
+	p_fecha character varying(50)  := current_date;
+	p_tiempo character varying(50) := current_time;
+begin
+							
+							
+							insert into log_inicioseseion
+							values(p_doc_id, p_nombres, p_apellidos,p_cargo,p_tipo,p_fecha,p_tiempo,p_ip);
+end
+$$ language plpgsql;
+-- Función para insertar, actualizar log usuario, log select * from credenciales_acceso
+CREATE OR REPLACE FUNCTION fn_insert_log_usuario
+											(
+											p_email character varying(150),
+											p_cargo character varying(50),
+											p_tipo char(1),
+											p_ip character varying(100)
+											-- AGREGAR LOS PARÁMETROS QUE FALTAN
+											)returns void as
+$$
+declare
+	estado int:= (select count(*) from usuario where doc_id = p_doc_id);
+begin
+							
+							if estado = 0 then
+							
+								insert into log_usuario
+										(
+											usuarioqueregistra_doc_id, 
+											usuarioqueregistra_nombres, 
+											usuarioqueregistra_apellidos, 
+											usuarioqueregistra_cargo, 
+											usuarioqueregistra_tipo, 
+											doc_id, 
+											nombres, 
+											apellidos, 
+											direccion, 
+											telefono, 
+											email, 
+											cargo_id, 
+											tipo_operacion
+										)
+									values (
+												'$_SESSION[s_doc_id]', 
+												'$_SESSION[s_usuario]', 
+												'$_SESSION[s_apellidos]', 
+												'$_SESSION[cargo]', 
+												'$_SESSION[tipo]',
+												?, 
+												?, 
+												?, 
+												?, 
+												?, 
+												?, 
+												?, 
+												?
+											);
+										INSERT INTO log_credenciales_acceso
+																(
+																	codigo_usuario, 
+																	clave, 
+																	tipo, 
+																	estado, 
+																	fecha_registro, 
+																	doc_id
+																)
+										VALUES (?, ?, ?, ?, ?, ?);
+									else
+										
+										UPDATE 
+											log_usuario
+										SET 
+											usuarioqueregistra_doc_id=?, 
+											usuarioqueregistra_nombres=?, 
+											usuarioqueregistra_apellidos=?, 
+											usuarioqueregistra_cargo=?, 
+											usuarioqueregistra_tipo=?, 
+											doc_id=?, 
+											nombres=?, 
+											apellidos=?, 
+											direccion=?, 
+											telefono=?, 
+											email=?, 
+											cargo_id=?, 
+											tipo_operacion=?
+										WHERE 
+											doc_id=?;
+											
+										UPDATE 
+											log_credenciales_acceso
+										SET 
+											codigo_usuario=?, 
+											clave=?, 
+											tipo=?, 
+											estado=?, 
+											fecha_registro=?, 
+											doc_id=?
+										WHERE 
+											doc_id=?;
+										
+end
+$$ language plpgsql;
 
+
+select * from fn_insert_log_inicioseseion('docente@hotmail.com','docente','d','181.66.73.56');
+
+
+
+
+
+select * from log_curso
+
+
+
+create function SP_TR_Insert() returns trigger as 
+$$
+declare
+
+begin
+		insert into log_curso
+		values(old.doc_id, old.nombres, old.apellidos);
+$$
+end plpgsql;

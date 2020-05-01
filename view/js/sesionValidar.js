@@ -118,7 +118,7 @@ function numSesion()
         var datosJSON = resultado;
 
         if (datosJSON.estado === 200) {
-            location.href = "../view/pruebaSimulador.view.php";
+            location.href = "../view/reporteAlumno.view.php";
                                 swal("Iniciando Sesión", "", "success");
                 
 

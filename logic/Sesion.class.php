@@ -61,11 +61,11 @@ class Sesion extends Conexion {
                             u.email = :p_email 
                 ";
 
-
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_email", $this->getEmail());
-//            $sentencia->bindParam(":p_tipo", $this->getTipo());
             $sentencia->execute();
+
+
 
             if ($sentencia->rowCount()) {//Le pregunto si ha devuelto registros
                 //El usuario si existe
@@ -79,6 +79,7 @@ class Sesion extends Conexion {
 
 //                        $_SESSION["s_usuario"]  = $resultado["nombre"] . ' ' . $resultado["apellidos"];
                         $_SESSION["s_usuario"] = $resultado["nombres"];
+                        $_SESSION["s_apellidos"] = $resultado["apellidos"];
                         $_SESSION["s_email"] = $this->getEmail();
                         $_SESSION["s_doc_id"] = $resultado["doc_id"];
                         $_SESSION["codigo_usuario"] = $resultado["codigo_usuario"];
@@ -88,7 +89,17 @@ class Sesion extends Conexion {
                         $_SESSION["curso_id"] = $resultado["curso_id"]; // tipo de usuario rol
                         $_SESSION["numiniciosesion"] = $resultado["numiniciosesion"]; // tipo de usuario rol
                         
-                        //this.numInicioSsion();
+                        /*Registramos el movimiento del inicio de sesión*/
+                       // $p_ip = getRealIP();
+                        $sql2 = "select * from fn_insert_log_inicioseseion(
+                                                                        :p_email, 
+                                                                        '$_SESSION[cargo]',
+                                                                        '$_SESSION[tipo]', 
+                                                                        '$_SERVER[REMOTE_ADDR]'
+                                                                    );";
+                        $sentencia2 = $this->dblink->prepare($sql2);
+                        $sentencia2->bindParam(":p_email", $this->getEmail());
+                        $sentencia2->execute();
                         return "SI"; //Si ingresa
                         //numInicioSsion($_SESSION["s_doc_id"]);
                     }
@@ -102,6 +113,18 @@ class Sesion extends Conexion {
             throw $exc;
         }
     }
+/*
+    public function getRealIP() {
+
+        if (!empty($_SERVER["HTTP_CLIENT_IP"]))
+            return $_SERVER["HTTP_CLIENT_IP"];
+           
+        if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+       
+        return $_SERVER["REMOTE_ADDR"];
+}
+*/
     public function numInicioSsion()
     {
         session_name("CampusVirtual");

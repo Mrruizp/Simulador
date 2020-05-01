@@ -39,7 +39,6 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-8">
                             <!-- Main content -->
                             <section class="invoice">
                                 <div class="row">
@@ -51,7 +50,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                     </div>
                               </div>
                               <div class="row">
-                                <div class="col-md-12 box box-default">
+                                <div class="col-md-6">
                                     <div class="box-header with-border">
                                       <h1 class="box-title">Ingresos al Sistema</h1>
 
@@ -93,7 +92,7 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                     </div>
                                     <!-- /.footer -->
                                   </div>
-                                  <div class="col-md-12 box box-default">
+                                  <div class="col-md-6">
                                     <div class="box-header with-border">
                                       <h2 class="box-title">Examen</h2>
 
@@ -137,8 +136,6 @@ require_once '../controller/perfil.usuario.leer.datos.controller.php';
                                     <!-- /.footer -->
                                   </div>
                                 </div>
-
-                            </div>
                     </section>
                             
                 </div>
