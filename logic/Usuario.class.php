@@ -633,6 +633,33 @@ class Usuario extends Conexion {
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_doc_id", $this->getDni());
             $sentencia->execute();
+
+            session_name("CampusVirtual");
+                        session_start();
+            $sql = "select * from fn_insert_log_usuario
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        null,
+                                        :p_doc_id,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        'Delete'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_doc_id", $this->getDni());
+                $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;

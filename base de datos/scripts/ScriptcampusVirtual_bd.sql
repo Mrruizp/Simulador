@@ -230,6 +230,7 @@ CREATE TABLE correlativo
     usuarioQueRegistra_nombres character varying(50),
     usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
+	usuarioQueRegistra_tipo char(1),
 	fecha character varying(50),
 	tiempo character varying(50),
 	curso_id int,
@@ -243,6 +244,7 @@ CREATE TABLE correlativo
     usuarioQueRegistra_nombres character varying(50),
     usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
+	usuarioQueRegistra_tipo char(1),
 	fecha character varying(50),
 	tiempo character varying(50),
 	prueba_id int,
@@ -259,6 +261,7 @@ CREATE TABLE log_pregunta
     usuarioQueRegistra_nombres character varying(50),
     usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
+	usuarioQueRegistra_tipo char(1),
 	fecha character varying(50),
 	tiempo character varying(50),
 	pregunta_id integer,
@@ -1443,7 +1446,7 @@ begin
 							values(p_doc_id, p_nombres, p_apellidos,p_cargo,p_tipo,p_fecha,p_tiempo,p_ip);
 end
 $$ language plpgsql;
--- Función para insertar, actualizar log usuario, log select * from credenciales_acceso
+-- Función para insertar, actualizar o eliminar log usuario, log select * from credenciales_acceso
 -- _log <-- usuario responsable de haber realizado la operación.
 
 select * from log_usuario;
@@ -1546,9 +1549,72 @@ begin
 end
 $$ language plpgsql;
 
-select * from log_usuario
+-- Función para insertar, actualizar o eliminar log usuario
+-- _log <-- usuario responsable de haber realizado la operación.
 
-select * from credenciales_acceso;
+select * from log_curso;
+
+CREATE OR REPLACE FUNCTION fn_insert_log_curso
+											(
+											p_doc_id_log character varying(20), 
+											p_nombres_log character varying(50),
+											p_apellidos_log character varying(50), 
+											p_cargo_id_log int, 
+											p_tipo_log char(1), 
+											p_curso_id int,
+											p_nombre_curso character varying(200),
+											p_tipo_operacion character varying(100)
+											)returns void as
+$$
+declare
+	p_fecha character varying(50)  := current_date;
+	p_tiempo character varying(50) := current_time;
+begin
+							
+							-- if estado = 0 then
+							
+								insert into log_curso
+										(
+											usuarioqueregistra_doc_id, 
+											usuarioqueregistra_nombres,
+											usuarioqueregistra_apellidos, 
+											usuarioqueregistra_cargo_id, 
+											usuarioqueregistra_tipo,
+											fecha,
+											tiempo,
+											curso_id,
+											nombre_curso,
+											tipo_operacion
+										)
+									values (
+												p_doc_id_log, 
+												p_nombres_log,
+												p_apellidos_log, 
+												p_cargo_id_log, 
+												p_tipo_log,
+												p_fecha,
+												p_tiempo,
+												p_curso_id,
+												p_nombre_curso,
+												p_tipo_operacion
+											); 
+										
+end
+$$ language plpgsql;
+
+
+
+select * from fn_insert_log_curso
+                                    (
+                                        '12345678', 
+                                        'Maria',
+                                        'Trinida Asustaa', 
+                                        2, 
+                                        'A',
+                                        22,
+                                        'Marketing digitall',
+                                        'Insertar'
+                                    );
 
 select * from fn_insert_log_usuario
                                     (

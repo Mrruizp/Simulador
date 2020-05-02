@@ -1,7 +1,8 @@
 <?php
 
 require_once '../data/Conexion.class.php';
-
+session_name("CampusVirtual");
+                        session_start();
 class Curso extends Conexion {
 
     private $codigo_curso;
@@ -80,6 +81,23 @@ class Curso extends Conexion {
                     where tabla='curso'";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->execute();
+
+                $sql = "select * from fn_insert_log_curso
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_curso_id,
+                                        :p_nombre_curso,
+                                        'Insertar'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
+                $sentencia->bindParam(":p_nombre_curso", $this->getNombre_curso());
+                $sentencia->execute();
+                /* Insertar en la tabla la
                 /* Actualizar el correlativo */
                 $this->dblink->commit();
                 return true;
@@ -124,6 +142,22 @@ class Curso extends Conexion {
             $sentencia->bindParam(":p_nombre_curso", $this->getNombre_curso());
             $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
             $sentencia->execute();
+
+            $sql = "select * from fn_insert_log_curso
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_curso_id,
+                                        :p_nombre_curso,
+                                        'Update'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
+                $sentencia->bindParam(":p_nombre_curso", $this->getNombre_curso());
+                $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;
@@ -139,6 +173,22 @@ class Curso extends Conexion {
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
             $sentencia->execute();
+
+            $sql = "select * from fn_insert_log_curso
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_curso_id,
+                                        null,
+                                        'Eliminar'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
+                //$sentencia->bindParam(":p_nombre_curso", $this->getNombre_curso());
+                $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;

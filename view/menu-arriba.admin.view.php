@@ -1,5 +1,5 @@
 <header class="main-header">    
-    <a href="pruebaSimulador.view.php"class="logo">      
+    <a href="#"class="logo">      
       <span class="logo-lg"><b><img src="../images/logo_blanco_IPEV.png" class="img-responsive center-block">   </span>
     </a>
     <nav class="navbar navbar-static-top">

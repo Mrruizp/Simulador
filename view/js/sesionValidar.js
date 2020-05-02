@@ -118,7 +118,7 @@ function numSesion()
         var datosJSON = resultado;
 
         if (datosJSON.estado === 200) {
-            location.href = "../view/reporteAlumno.view.php";
+            location.href = "../view/reporteEstadistico.view.php";
                                 swal("Iniciando Sesión", "", "success");
                 
 
