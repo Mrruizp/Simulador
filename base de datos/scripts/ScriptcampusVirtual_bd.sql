@@ -252,7 +252,9 @@ CREATE TABLE correlativo
     tiempo_prueba character varying(50),
     puntaje_aprobacion int,
     instrucciones character varying(500),
-    curso_id int
+    curso_id int,
+	tipo_operacion character varying(100)
+	
 );
 	-- drop table log_pregunta
 CREATE TABLE log_pregunta
@@ -271,7 +273,8 @@ CREATE TABLE log_pregunta
 	alternativa3 character varying(500),
 	alternativa4 character varying(500),
 	respuesta character varying(500),
-    prueba_id integer
+    prueba_id integer,
+	tipo_operacion character varying(100)
 );
 -- drop table log_detalle_docente_profesor
 CREATE TABLE log_detalle_docente_profesor
@@ -1602,79 +1605,84 @@ begin
 end
 $$ language plpgsql;
 
+-- Función para insertar, actualizar o eliminar log prueba
+-- _log <-- usuario responsable de haber realizado la operación.
+
+select * from log_prueba;
+select * from correlativo;
 
 
-select * from fn_insert_log_curso
-                                    (
-                                        '12345678', 
-                                        'Maria',
-                                        'Trinida Asustaa', 
-                                        2, 
-                                        'A',
-                                        22,
-                                        'Marketing digitall',
-                                        'Insertar'
-                                    );
-
-select * from fn_insert_log_usuario
-                                    (
-                                        '12345678', 
-                                        'Maria',
-                                        'Trinida Asustaa', 
-                                        2, 
-                                        'A',
-										9,
-                                        '41414145', 
-                                        'estudiante8',
-                                        'estudiantebeta8', 
-                                        '-----', 
-                                        '963214742', 
-                                        'estudiante8@hotmail.com', 
-                                        6, 
-                                        '123',
-                                        'E',
-                                        'A',
-                                        22,
-										'update'
-                                    );
-									
-/*	else
+CREATE OR REPLACE FUNCTION fn_insert_log_prueba
+											(
+											p_doc_id_log character varying(20), 
+											p_nombres_log character varying(50),
+											p_apellidos_log character varying(50), 
+											p_cargo_id_log int, 
+											p_tipo_log char(1), 
+											p_prueba_id int,
+											p_cant_preguntas character varying(4),
+											p_tiempo_prueba character varying(50),
+											p_puntaje_aprobacion int,
+											p_curso_id int,
+											p_tipo_operacion character varying(100)
+											)returns void as
+$$
+declare
+	p_fecha character varying(50)  := current_date;
+	p_tiempo character varying(50) := current_time;
+begin
+							
+							-- if estado = 0 then
+							
+								insert into log_prueba
+										(
+											usuarioqueregistra_doc_id, 
+											usuarioqueregistra_nombres,
+											usuarioqueregistra_apellidos, 
+											usuarioqueregistra_cargo_id, 
+											usuarioqueregistra_tipo,
+											fecha,
+											tiempo,
+											prueba_id,
+											cant_preguntas,
+											tiempo_prueba,
+											puntaje_aprobacion,
+											curso_id,
+											tipo_operacion
+										)
+									values (
+												p_doc_id_log, 
+												p_nombres_log,
+												p_apellidos_log, 
+												p_cargo_id_log, 
+												p_tipo_log,
+												p_fecha,
+												p_tiempo,
+												p_prueba_id,
+												p_cant_preguntas,
+												p_tiempo_prueba,
+												p_puntaje_aprobacion,
+												p_curso_id,
+												p_tipo_operacion
+											); 
 										
-										UPDATE 
-											log_usuario
-										SET 
-											usuarioqueregistra_doc_id=?, 
-											usuarioqueregistra_nombres=?, 
-											usuarioqueregistra_apellidos=?, 
-											usuarioqueregistra_cargo=?, 
-											usuarioqueregistra_tipo=?, 
-											doc_id=?, 
-											nombres=?, 
-											apellidos=?, 
-											direccion=?, 
-											telefono=?, 
-											email=?, 
-											cargo_id=?, 
-											tipo_operacion=?
-										WHERE 
-											doc_id=?;
-											
-										UPDATE 
-											log_credenciales_acceso
-										SET 
-											codigo_usuario=?, 
-											clave=?, 
-											tipo=?, 
-											estado=?, 
-											fecha_registro=?, 
-											doc_id=?
-										WHERE 
-											doc_id=?;
-								and if;
-								*/
-select * from fn_insert_log_inicioseseion('docente@hotmail.com','docente','d','181.66.73.56');
+end
+$$ language plpgsql;
 
-
+select * from fn_insert_log_prueba
+                                    (
+                                        '12345678', 
+										'Maria',
+										'Trinida Asustaa', 
+										 2, 
+										'A',
+										22,
+										'40',
+										'6m',
+										60,
+										22,
+										'Update'
+                                    );
 
 
 

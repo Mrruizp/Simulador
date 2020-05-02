@@ -110,6 +110,30 @@ class Prueba extends Conexion {
                 $sentencia->bindParam(":p_curso_id", $this->getCurso_id());
                 $sentencia->execute();
                 /* Insertar en la tabla laboratorio */
+                
+                
+
+                $sql = "select * from fn_insert_log_prueba
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_prueba_id,
+                                        :p_cant_preguntas,
+                                        :p_tiempo_prueba,
+                                        :p_puntaje_aprobacion,
+                                        :p_curso_id,
+                                        'Insert/Update'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+                $sentencia->bindParam(":p_cant_preguntas", $this->getCantPregunta());
+                $sentencia->bindParam(":p_tiempo_prueba", $this->getTiempo());
+                $sentencia->bindParam(":p_puntaje_aprobacion", $this->getPuntaje());
+                $sentencia->bindParam(":p_curso_id", $this->getCurso_id());
+                $sentencia->execute();
 
                 /* Actualizar el correlativo */
                 $sql = "update correlativo set numero = numero + 1 
@@ -194,6 +218,24 @@ class Prueba extends Conexion {
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
             $sentencia->execute();
+
+            $sql = "select * from fn_insert_log_prueba
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_prueba_id,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        'Delete'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+                $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;
