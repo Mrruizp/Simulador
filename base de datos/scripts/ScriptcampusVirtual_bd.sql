@@ -196,72 +196,73 @@ CREATE TABLE correlativo
     -- drop table log_usuario
   CREATE TABLE log_usuario
   (
-	usuarioQueRegistra_doc_id character varying(20) not null,
-    usuarioQueRegistra_nombres character varying(50) not null,
-    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_doc_id character varying(20),
+    usuarioQueRegistra_nombres character varying(50),
+    usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
-	usuarioQueRegistra_tipo char(1) not null,
-	fecha character varying(50) not null,
-	tiempo character varying(50) not null,
-  	doc_id character varying(20) not null,
-    nombres character varying(50) not null,
-    apellidos character varying(50) not null,
-	direccion character varying(200) not null,
-    telefono character varying(25) not null,
-    email character varying(150) not null,
+	usuarioQueRegistra_tipo char(1),
+	fecha character varying(50),
+	tiempo character varying(50),
+  	doc_id character varying(20),
+    nombres character varying(50),
+    apellidos character varying(50),
+	direccion character varying(200),
+    telefono character varying(25),
+    email character varying(150),
     cargo_id integer,
 	tipo_operacion character varying(100)
   );
+  
   -- drop table log_credenciales_acceso
   CREATE TABLE log_credenciales_acceso
  ( 	
-	codigo_usuario integer not null,
-	clave character(32) not NULL,
-	tipo char(1) not null, -- Amin: A, Docente: D, Estudiante: E
+	clave character(32),
+	tipo char(1), -- Amin: A, Docente: D, Estudiante: E
 	estado char(1),
     fecha_registro varchar(50),
     doc_ID varchar(20)    
  );
+ 
   -- drop table log_curso
   CREATE TABLE log_curso
   (
-	usuarioQueRegistra_doc_id character varying(20) not null,
-    usuarioQueRegistra_nombres character varying(50) not null,
-    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_doc_id character varying(20),
+    usuarioQueRegistra_nombres character varying(50),
+    usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
-	fecha character varying(50) not null,
-	tiempo character varying(50) not null,
-	curso_id integer not null,
-	nombre_curso varchar(200) not null,
+	fecha character varying(50),
+	tiempo character varying(50),
+	curso_id int,
+	nombre_curso varchar(200),
 	tipo_operacion character varying(100)
   );
   -- drop table log_prueba
   CREATE TABLE log_prueba
 (
-	usuarioQueRegistra_doc_id character varying(20) not null,
-    usuarioQueRegistra_nombres character varying(50) not null,
-    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_doc_id character varying(20),
+    usuarioQueRegistra_nombres character varying(50),
+    usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
-	fecha character varying(50) not null,
-	tiempo character varying(50) not null,
-	prueba_id integer not null,
-    cant_preguntas character varying(4) not null,
-    tiempo_prueba character varying(50) not null,
-    puntaje_aprobacion int not null,
-    instrucciones character varying(500) not null,
-    curso_id integer
+	fecha character varying(50),
+	tiempo character varying(50),
+	prueba_id int,
+    cant_preguntas character varying(4),
+    tiempo_prueba character varying(50),
+    puntaje_aprobacion int,
+    instrucciones character varying(500),
+    curso_id int
 );
 	-- drop table log_pregunta
 CREATE TABLE log_pregunta
 (
-	usuarioQueRegistra_doc_id character varying(20) not null,
-    usuarioQueRegistra_nombres character varying(50) not null,
-    usuarioQueRegistra_apellidos character varying(50) not null,
+	usuarioQueRegistra_doc_id character varying(20),
+    usuarioQueRegistra_nombres character varying(50),
+    usuarioQueRegistra_apellidos character varying(50),
 	usuarioQueRegistra_cargo_id int,
-	fecha character varying(50) not null,
-	tiempo character varying(50) not null,
-	pregunta_id integer not null,
-    nombre_pregunta character varying(12000) not null,
+	fecha character varying(50),
+	tiempo character varying(50),
+	pregunta_id integer,
+    nombre_pregunta character varying(12000),
     alternativa1 character varying(500),
 	alternativa2 character varying(500),
 	alternativa3 character varying(500),
@@ -269,7 +270,7 @@ CREATE TABLE log_pregunta
 	respuesta character varying(500),
     prueba_id integer
 );
-
+-- drop table log_detalle_docente_profesor
 CREATE TABLE log_detalle_docente_profesor
   (
   detalle_docente_profesor_id integer,
@@ -1467,7 +1468,8 @@ CREATE OR REPLACE FUNCTION fn_insert_log_usuario
 											p_clave character varying(32),
 											p_tipo char(1),
 											p_estado char(1),
-											p_codigoCurso int
+											p_codigoCurso int,
+											p_tipo_operacion character varying(100)
 											)returns void as
 $$
 declare
@@ -1510,11 +1512,10 @@ begin
 												p_telefono, 
 												p_email, 
 												p_cargo_id,
-												'insert'
-											);
+												p_tipo_operacion
+											); 
 										INSERT INTO log_credenciales_acceso
-																(
-																	codigo_usuario, 
+																( 
 																	clave, 
 																	tipo, 
 																	estado, 
@@ -1522,7 +1523,6 @@ begin
 																	doc_id
 																)
 										VALUES (
-													p_cod_usuario, 
 													p_clave, 
 													p_tipo, 
 													p_estado, 
@@ -1557,7 +1557,7 @@ select * from fn_insert_log_usuario
                                         'Trinida Asustaa', 
                                         2, 
                                         'A',
-                                        9,
+										9,
                                         '41414145', 
                                         'estudiante8',
                                         'estudiantebeta8', 
@@ -1568,7 +1568,8 @@ select * from fn_insert_log_usuario
                                         '123',
                                         'E',
                                         'A',
-                                        22
+                                        22,
+										'update'
                                     );
 									
 /*	else

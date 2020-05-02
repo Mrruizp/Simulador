@@ -517,7 +517,8 @@ class Usuario extends Conexion {
                                         :p_clave,
                                         :p_tipo,
                                         :p_estado,
-                                        :p_codigoCurso
+                                        :p_codigoCurso,
+                                        'Insert'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_cod_usuario", $this->getCodigoUsuario());
@@ -580,6 +581,43 @@ class Usuario extends Conexion {
             $sentencia->bindParam(":p_estado", $this->getEstado());
             $sentencia->bindParam(":p_codigoCurso", $this->getCodigoCurso());
             $sentencia->execute();
+            session_name("CampusVirtual");
+                        session_start();
+            $sql = "select * from fn_insert_log_usuario
+                                    (
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_cod_usuario,
+                                        :p_doc_id,
+                                        :p_nombres,
+                                        :p_apellidos,
+                                        :p_direccion,
+                                        :p_telefono,
+                                        :p_email,
+                                        :p_cargo_id,
+                                        :p_clave,
+                                        :p_tipo,
+                                        :p_estado,
+                                        :p_codigoCurso,
+                                        'Update'
+                                    );";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_cod_usuario", $this->getCodigoUsuario());
+                $sentencia->bindParam(":p_doc_id", $this->getDni());
+                $sentencia->bindParam(":p_nombres", $this->getNombres());
+                $sentencia->bindParam(":p_apellidos", $this->getApellidos());
+                $sentencia->bindParam(":p_direccion", $this->getDireccion());
+                $sentencia->bindParam(":p_telefono", $this->getTelefono());
+                $sentencia->bindParam(":p_email", $this->getEmail());
+                $sentencia->bindParam(":p_cargo_id", $this->getCargo());
+                $sentencia->bindParam(":p_clave", $this->getConstrasenia());
+                $sentencia->bindParam(":p_tipo", $this->getTipo());
+                $sentencia->bindParam(":p_estado", $this->getEstado());
+                $sentencia->bindParam(":p_codigoCurso", $this->getCodigoCurso());
+                $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;
