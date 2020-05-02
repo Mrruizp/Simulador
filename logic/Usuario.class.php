@@ -496,25 +496,42 @@ class Usuario extends Conexion {
                         where tabla='credenciales_acceso'";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->execute();
-                
+                session_name("CampusVirtual");
+                        session_start();
                 /*Actualizar el log_usuario*/
-                $sql = "insert * from fn_insert_log_usuario
+                $sql = "select * from fn_insert_log_usuario
                                     (
-                                        usuarioqueregistra_doc_id, 
-                                        usuarioqueregistra_nombres, 
-                                        usuarioqueregistra_apellidos, 
-                                        usuarioqueregistra_cargo, 
-                                        usuarioqueregistra_tipo, 
-                                        doc_id, 
-                                        nombres, 
-                                        apellidos, 
-                                        direccion, 
-                                        telefono, 
-                                        email, 
-                                        cargo_id, 
-                                        tipo_operacion
+                                        '$_SESSION[s_doc_id]',
+                                        '$_SESSION[s_usuario]',
+                                        '$_SESSION[s_apellidos]',
+                                        $_SESSION[cargo_id],
+                                        '$_SESSION[tipo]',
+                                        :p_cod_usuario,
+                                        :p_doc_id,
+                                        :p_nombres,
+                                        :p_apellidos,
+                                        :p_direccion,
+                                        :p_telefono,
+                                        :p_email,
+                                        :p_cargo_id,
+                                        :p_clave,
+                                        :p_tipo,
+                                        :p_estado,
+                                        :p_codigoCurso
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_cod_usuario", $this->getCodigoUsuario());
+                $sentencia->bindParam(":p_doc_id", $this->getDni());
+                $sentencia->bindParam(":p_nombres", $this->getNombres());
+                $sentencia->bindParam(":p_apellidos", $this->getApellidos());
+                $sentencia->bindParam(":p_direccion", $this->getDireccion());
+                $sentencia->bindParam(":p_telefono", $this->getTelefono());
+                $sentencia->bindParam(":p_email", $this->getEmail());
+                $sentencia->bindParam(":p_cargo_id", $this->getCargo());
+                $sentencia->bindParam(":p_clave", $this->getConstrasenia());
+                $sentencia->bindParam(":p_tipo", $this->getTipo());
+                $sentencia->bindParam(":p_estado", $this->getEstado());
+                $sentencia->bindParam(":p_codigoCurso", $this->getCodigoCurso());
                 $sentencia->execute();
 
                 $this->dblink->commit();

@@ -193,14 +193,16 @@ CREATE TABLE correlativo
 	ip character varying(200) not null
   );
   
-    -- tabla para el historial de log 
+    -- drop table log_usuario
   CREATE TABLE log_usuario
   (
 	usuarioQueRegistra_doc_id character varying(20) not null,
     usuarioQueRegistra_nombres character varying(50) not null,
     usuarioQueRegistra_apellidos character varying(50) not null,
-	usuarioQueRegistra_cargo character varying(50) not null,
-	usuarioQueRegistra_tipo char(1) not null,	  
+	usuarioQueRegistra_cargo_id int,
+	usuarioQueRegistra_tipo char(1) not null,
+	fecha character varying(50) not null,
+	tiempo character varying(50) not null,
   	doc_id character varying(20) not null,
     nombres character varying(50) not null,
     apellidos character varying(50) not null,
@@ -210,7 +212,7 @@ CREATE TABLE correlativo
     cargo_id integer,
 	tipo_operacion character varying(100)
   );
-  
+  -- drop table log_credenciales_acceso
   CREATE TABLE log_credenciales_acceso
  ( 	
 	codigo_usuario integer not null,
@@ -220,13 +222,15 @@ CREATE TABLE correlativo
     fecha_registro varchar(50),
     doc_ID varchar(20)    
  );
-  -- drop table log_usuario
+  -- drop table log_curso
   CREATE TABLE log_curso
   (
 	usuarioQueRegistra_doc_id character varying(20) not null,
     usuarioQueRegistra_nombres character varying(50) not null,
     usuarioQueRegistra_apellidos character varying(50) not null,
-	usuarioQueRegistra_cargo character varying(50) not null,
+	usuarioQueRegistra_cargo_id int,
+	fecha character varying(50) not null,
+	tiempo character varying(50) not null,
 	curso_id integer not null,
 	nombre_curso varchar(200) not null,
 	tipo_operacion character varying(100)
@@ -237,7 +241,9 @@ CREATE TABLE correlativo
 	usuarioQueRegistra_doc_id character varying(20) not null,
     usuarioQueRegistra_nombres character varying(50) not null,
     usuarioQueRegistra_apellidos character varying(50) not null,
-	usuarioQueRegistra_cargo character varying(50) not null,
+	usuarioQueRegistra_cargo_id int,
+	fecha character varying(50) not null,
+	tiempo character varying(50) not null,
 	prueba_id integer not null,
     cant_preguntas character varying(4) not null,
     tiempo_prueba character varying(50) not null,
@@ -251,7 +257,9 @@ CREATE TABLE log_pregunta
 	usuarioQueRegistra_doc_id character varying(20) not null,
     usuarioQueRegistra_nombres character varying(50) not null,
     usuarioQueRegistra_apellidos character varying(50) not null,
-	usuarioQueRegistra_cargo character varying(50) not null,
+	usuarioQueRegistra_cargo_id int,
+	fecha character varying(50) not null,
+	tiempo character varying(50) not null,
 	pregunta_id integer not null,
     nombre_pregunta character varying(12000) not null,
     alternativa1 character varying(500),
@@ -261,12 +269,14 @@ CREATE TABLE log_pregunta
 	respuesta character varying(500),
     prueba_id integer
 );
+
 CREATE TABLE log_detalle_docente_profesor
   (
   detalle_docente_profesor_id integer,
   curso_id int,
   doc_id character varying(20)
   );
+  
 -- drop table log_usuario_curso_evento
 
 -- drop table log_usuario_curso_evento;
@@ -1433,28 +1443,49 @@ begin
 end
 $$ language plpgsql;
 -- Función para insertar, actualizar log usuario, log select * from credenciales_acceso
+-- _log <-- usuario responsable de haber realizado la operación.
+
+select * from log_usuario;
+select * from log_credenciales_acceso;
+select * from log_detalle_docente_profesor;
+
 CREATE OR REPLACE FUNCTION fn_insert_log_usuario
 											(
-											p_email character varying(150),
-											p_cargo character varying(50),
+											p_doc_id_log character varying(20), 
+											p_nombres_log character varying(50),
+											p_apellidos_log character varying(50), 
+											p_cargo_id_log int, 
+											p_tipo_log char(1), 
+											p_cod_usuario int,
+											p_doc_id character varying(20), 
+											p_nombres character varying(50),
+											p_apellidos character varying(50), 
+											p_direccion character varying(200), 
+											p_telefono character varying(25), 
+											p_email character varying(150), 
+											p_cargo_id int,
+											p_clave character varying(32),
 											p_tipo char(1),
-											p_ip character varying(100)
-											-- AGREGAR LOS PARÁMETROS QUE FALTAN
+											p_estado char(1),
+											p_codigoCurso int
 											)returns void as
 $$
 declare
-	estado int:= (select count(*) from usuario where doc_id = p_doc_id);
+	p_fecha character varying(50)  := current_date;
+	p_tiempo character varying(50) := current_time;
 begin
 							
-							if estado = 0 then
+							-- if estado = 0 then
 							
 								insert into log_usuario
 										(
 											usuarioqueregistra_doc_id, 
 											usuarioqueregistra_nombres, 
 											usuarioqueregistra_apellidos, 
-											usuarioqueregistra_cargo, 
-											usuarioqueregistra_tipo, 
+											usuarioqueregistra_cargo_id, 
+											usuarioqueregistra_tipo,
+											fecha,
+											tiempo,
 											doc_id, 
 											nombres, 
 											apellidos, 
@@ -1465,19 +1496,21 @@ begin
 											tipo_operacion
 										)
 									values (
-												'$_SESSION[s_doc_id]', 
-												'$_SESSION[s_usuario]', 
-												'$_SESSION[s_apellidos]', 
-												'$_SESSION[cargo]', 
-												'$_SESSION[tipo]',
-												?, 
-												?, 
-												?, 
-												?, 
-												?, 
-												?, 
-												?, 
-												?
+												p_doc_id_log, 
+												p_nombres_log,
+												p_apellidos_log, 
+												p_cargo_id_log, 
+												p_tipo_log,
+												p_fecha,
+												p_tiempo,
+												p_doc_id, 
+												p_nombres,
+												p_apellidos, 
+												p_direccion, 
+												p_telefono, 
+												p_email, 
+												p_cargo_id,
+												'insert'
 											);
 										INSERT INTO log_credenciales_acceso
 																(
@@ -1488,8 +1521,57 @@ begin
 																	fecha_registro, 
 																	doc_id
 																)
-										VALUES (?, ?, ?, ?, ?, ?);
-									else
+										VALUES (
+													p_cod_usuario, 
+													p_clave, 
+													p_tipo, 
+													p_estado, 
+													(select now()), 
+													p_doc_id
+												);
+										
+										INSERT INTO log_detalle_docente_profesor
+																(
+																	detalle_docente_profesor_id, 
+																	curso_id,
+																	doc_id
+																)
+										VALUES (
+													(select numero from correlativo where tabla = 'detalle_docente_profesor'),
+													p_codigoCurso,
+													p_doc_id
+												);
+								
+										
+end
+$$ language plpgsql;
+
+select * from log_usuario
+
+select * from credenciales_acceso;
+
+select * from fn_insert_log_usuario
+                                    (
+                                        '12345678', 
+                                        'Maria',
+                                        'Trinida Asustaa', 
+                                        2, 
+                                        'A',
+                                        9,
+                                        '41414145', 
+                                        'estudiante8',
+                                        'estudiantebeta8', 
+                                        '-----', 
+                                        '963214742', 
+                                        'estudiante8@hotmail.com', 
+                                        6, 
+                                        '123',
+                                        'E',
+                                        'A',
+                                        22
+                                    );
+									
+/*	else
 										
 										UPDATE 
 											log_usuario
@@ -1521,11 +1603,8 @@ begin
 											doc_id=?
 										WHERE 
 											doc_id=?;
-										
-end
-$$ language plpgsql;
-
-
+								and if;
+								*/
 select * from fn_insert_log_inicioseseion('docente@hotmail.com','docente','d','181.66.73.56');
 
 
