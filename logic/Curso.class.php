@@ -91,7 +91,8 @@ class Curso extends Conexion {
                                         '$_SESSION[tipo]',
                                         :p_curso_id,
                                         :p_nombre_curso,
-                                        'Insertar'
+                                        'Insertar',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
@@ -152,7 +153,8 @@ class Curso extends Conexion {
                                         '$_SESSION[tipo]',
                                         :p_curso_id,
                                         :p_nombre_curso,
-                                        'Update'
+                                        'Update',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());
@@ -183,7 +185,8 @@ class Curso extends Conexion {
                                         '$_SESSION[tipo]',
                                         :p_curso_id,
                                         null,
-                                        'Eliminar'
+                                        'Eliminar',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_curso_id", $this->getCodigo_curso());

@@ -125,7 +125,8 @@ class Prueba extends Conexion {
                                         :p_tiempo_prueba,
                                         :p_puntaje_aprobacion,
                                         :p_curso_id,
-                                        'Insert/Update'
+                                        'Insert/Update',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
@@ -180,7 +181,7 @@ class Prueba extends Conexion {
             throw $exc;
         }
     }
-
+/*
     public function editar() {
         try {
             $sql = "
@@ -206,7 +207,7 @@ class Prueba extends Conexion {
         }
         return false;
     }
-
+*/
     public function eliminar() {
         try {
             $sql = "
@@ -231,7 +232,8 @@ class Prueba extends Conexion {
                                         null,
                                         null,
                                         null,
-                                        'Delete'
+                                        'Delete',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());

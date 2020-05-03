@@ -518,7 +518,8 @@ class Usuario extends Conexion {
                                         :p_tipo,
                                         :p_estado,
                                         :p_codigoCurso,
-                                        'Insert'
+                                        'Insert',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_cod_usuario", $this->getCodigoUsuario());
@@ -602,7 +603,8 @@ class Usuario extends Conexion {
                                         :p_tipo,
                                         :p_estado,
                                         :p_codigoCurso,
-                                        'Update'
+                                        'Update',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_cod_usuario", $this->getCodigoUsuario());
@@ -655,7 +657,8 @@ class Usuario extends Conexion {
                                         null,
                                         null,
                                         null,
-                                        'Delete'
+                                        'Delete',
+                                        '$_SERVER[REMOTE_ADDR]'
                                     );";
                 $sentencia = $this->dblink->prepare($sql);
                 $sentencia->bindParam(":p_doc_id", $this->getDni());

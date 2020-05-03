@@ -202,7 +202,8 @@ class Pregunta extends Conexion {
                                                 :p_alternativa4,
                                                 :p_respuesta,
                                                 :p_prueba_id,
-                                                'Insert'
+                                                'Insert',
+                                                '$_SERVER[REMOTE_ADDR]'
                                                 );
 
                     ";
@@ -303,7 +304,8 @@ class Pregunta extends Conexion {
                                                 :p_alternativa4,
                                                 :p_respuesta,
                                                 :p_prueba_id,
-                                                'Update'
+                                                'Update',
+                                                '$_SERVER[REMOTE_ADDR]'
                                                 );
 
                     ";
@@ -351,7 +353,8 @@ class Pregunta extends Conexion {
                                                 null,
                                                 null,
                                                 null,
-                                                'Delete'
+                                                'Delete',
+                                                '$_SERVER[REMOTE_ADDR]'
                                                 );
                 ";
             $sentencia = $this->dblink->prepare($sql);

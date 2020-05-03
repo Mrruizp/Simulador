@@ -31,29 +31,32 @@ function listar() {
 
             //Detalle
             $.each(datosJSON.datos, function (i, item) {
-                html += '<tr>';
-                html += '<td align="center" style="font-weight:normal">' + item.codigo_usuario + '</td>';
-                html += '<td align="center" style="font-weight:normal">' + item.doc_id + '</td>';
-                html += '<td align="center" style="font-weight:normal">' + item.clave + '</td>';
+            if(item.tipo !== "S") // si es super usuario no aparece en la lista de usuarios.
+                {
+                    html += '<tr>';
+                    html += '<td align="center" style="font-weight:normal">' + item.codigo_usuario + '</td>';
+                    html += '<td align="center" style="font-weight:normal">' + item.doc_id + '</td>';
+                    html += '<td align="center" style="font-weight:normal">' + item.clave + '</td>';
 
-                if(item.tipo === "A") html += '<td align="center" style="font-weight:normal">Administrador</td>';
-                if(item.tipo === "D") html += '<td align="center" style="font-weight:normal">Docente</td>';
-                if(item.tipo === "E") html += '<td align="center" style="font-weight:normal">Estudiante</td>';
+                    if(item.tipo === "A") html += '<td align="center" style="font-weight:normal">Administrador</td>';
+                    if(item.tipo === "D") html += '<td align="center" style="font-weight:normal">Docente</td>';
+                    if(item.tipo === "E") html += '<td align="center" style="font-weight:normal">Estudiante</td>';
 
-                if(item.estado === "A") 
-                    html += '<td align="center" style="font-weight:normal">Habilitado</td>';
-                else 
-                    html += '<td align="center" style="font-weight:normal">Deshabilitado</td>';
+                    if(item.estado === "A") 
+                        html += '<td align="center" style="font-weight:normal">Habilitado</td>';
+                    else 
+                        html += '<td align="center" style="font-weight:normal">Deshabilitado</td>';
 
-                html += '<td align="center" style="font-weight:normal">' + item.fecha_registro + '</td>';
-                html += '<td align="center">';
-                html += '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalFoto" onclick="leerFoto(' + item.doc_id + ')"><i class="fa fa-camera"></i></button>';
-                html += '&nbsp;&nbsp;&nbsp;';
-                html += '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" onclick="leerDatos(' + item.doc_id + ')"><i class="fa fa-pencil"></i></button>';
-                html += '&nbsp;&nbsp;&nbsp;';
-                html += '<button type="button" class="btn btn-danger btn-xs" onclick="eliminar(' + item.doc_id + ')"><i class="fa fa-close"></i></button>';
-                html += '</td>';
-                html += '</tr>';
+                    html += '<td align="center" style="font-weight:normal">' + item.fecha_registro + '</td>';
+                    html += '<td align="center">';
+                    html += '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModalFoto" onclick="leerFoto(' + item.doc_id + ')"><i class="fa fa-camera"></i></button>';
+                    html += '&nbsp;&nbsp;&nbsp;';
+                    html += '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" onclick="leerDatos(' + item.doc_id + ')"><i class="fa fa-pencil"></i></button>';
+                    html += '&nbsp;&nbsp;&nbsp;';
+                    html += '<button type="button" class="btn btn-danger btn-xs" onclick="eliminar(' + item.doc_id + ')"><i class="fa fa-close"></i></button>';
+                    html += '</td>';
+                    html += '</tr>';
+                }
             });
 
             html += '</tbody>';

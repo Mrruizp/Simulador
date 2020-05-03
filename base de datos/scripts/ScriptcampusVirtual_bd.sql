@@ -210,7 +210,8 @@ CREATE TABLE correlativo
     telefono character varying(25),
     email character varying(150),
     cargo_id integer,
-	tipo_operacion character varying(100)
+	tipo_operacion character varying(100),
+	ip character varying(200) not null
   );
   
   -- drop table log_credenciales_acceso
@@ -220,7 +221,7 @@ CREATE TABLE correlativo
 	tipo char(1), -- Amin: A, Docente: D, Estudiante: E
 	estado char(1),
     fecha_registro varchar(50),
-    doc_ID varchar(20)    
+    doc_ID varchar(20)
  );
  
   -- drop table log_curso
@@ -235,7 +236,8 @@ CREATE TABLE correlativo
 	tiempo character varying(50),
 	curso_id int,
 	nombre_curso varchar(200),
-	tipo_operacion character varying(100)
+	tipo_operacion character varying(100),
+	ip character varying(200) not null
   );
   -- drop table log_prueba
   CREATE TABLE log_prueba
@@ -253,8 +255,8 @@ CREATE TABLE correlativo
     puntaje_aprobacion int,
     instrucciones character varying(500),
     curso_id int,
-	tipo_operacion character varying(100)
-	
+	tipo_operacion character varying(100),
+	ip character varying(200) not null
 );
 	-- drop table log_pregunta
 CREATE TABLE log_pregunta
@@ -274,7 +276,8 @@ CREATE TABLE log_pregunta
 	alternativa4 character varying(500),
 	respuesta character varying(500),
     prueba_id integer,
-	tipo_operacion character varying(100)
+	tipo_operacion character varying(100),
+	ip character varying(200) not null
 );
 -- drop table log_detalle_docente_profesor
 CREATE TABLE log_detalle_docente_profesor
@@ -544,7 +547,20 @@ insert into menu_item_accesos(codigo_menu,codigo_menu_item,cargo_id,acceso)
 values(7,16,4,1);
 --------------------
 
+-- 03052020
 
+insert into cargo
+values(7, 'Soporte TI');
+insert into menu
+values(8,'Log');
+insert into menu_item
+values(8, 17, 'Log', 'log.view.php');
+insert into menu_item_accesos
+values(8, 17, 4, 1);
+insert into menu_item_accesos
+values(8, 17, 7, 1);
+
+------------------------
  -- Correlativo
 insert into correlativo(tabla, numero)
 values('usuario',0);
@@ -1421,7 +1437,10 @@ begin
 end
 $$ language plpgsql;
 
--- select * from log_usuario;
+select * from log_inicioseseion
+                    order by 
+                            4
+	-- select * from log_inicioseseion;
 -- select * from credenciales_acceso;
 
 CREATE OR REPLACE FUNCTION fn_insert_log_inicioseseion
@@ -1475,7 +1494,8 @@ CREATE OR REPLACE FUNCTION fn_insert_log_usuario
 											p_tipo char(1),
 											p_estado char(1),
 											p_codigoCurso int,
-											p_tipo_operacion character varying(100)
+											p_tipo_operacion character varying(100),
+											p_ip character varying(200)												
 											)returns void as
 $$
 declare
@@ -1501,7 +1521,8 @@ begin
 											telefono, 
 											email, 
 											cargo_id, 
-											tipo_operacion
+											tipo_operacion,
+											ip
 										)
 									values (
 												p_doc_id_log, 
@@ -1518,7 +1539,8 @@ begin
 												p_telefono, 
 												p_email, 
 												p_cargo_id,
-												p_tipo_operacion
+												p_tipo_operacion,
+												p_ip
 											); 
 										INSERT INTO log_credenciales_acceso
 																( 
@@ -1566,7 +1588,8 @@ CREATE OR REPLACE FUNCTION fn_insert_log_curso
 											p_tipo_log char(1), 
 											p_curso_id int,
 											p_nombre_curso character varying(200),
-											p_tipo_operacion character varying(100)
+											p_tipo_operacion character varying(100),
+											p_ip character varying(200)
 											)returns void as
 $$
 declare
@@ -1587,7 +1610,8 @@ begin
 											tiempo,
 											curso_id,
 											nombre_curso,
-											tipo_operacion
+											tipo_operacion,
+											ip
 										)
 									values (
 												p_doc_id_log, 
@@ -1599,7 +1623,8 @@ begin
 												p_tiempo,
 												p_curso_id,
 												p_nombre_curso,
-												p_tipo_operacion
+												p_tipo_operacion,
+												p_ip
 											); 
 										
 end
@@ -1624,7 +1649,8 @@ CREATE OR REPLACE FUNCTION fn_insert_log_prueba
 											p_tiempo_prueba character varying(50),
 											p_puntaje_aprobacion int,
 											p_curso_id int,
-											p_tipo_operacion character varying(100)
+											p_tipo_operacion character varying(100),
+											p_ip character varying(200)
 											)returns void as
 $$
 declare
@@ -1648,7 +1674,8 @@ begin
 											tiempo_prueba,
 											puntaje_aprobacion,
 											curso_id,
-											tipo_operacion
+											tipo_operacion,
+											ip
 										)
 									values (
 												p_doc_id_log, 
@@ -1663,7 +1690,8 @@ begin
 												p_tiempo_prueba,
 												p_puntaje_aprobacion,
 												p_curso_id,
-												p_tipo_operacion
+												p_tipo_operacion,
+												p_ip
 											); 
 										
 end
@@ -1672,9 +1700,13 @@ $$ language plpgsql;
 -- Función para insertar, actualizar o eliminar log prueba
 -- _log <-- prueba responsable de haber realizado la operación.
 
+select * from pregunta order by pregunta_id desc;
 select * from log_pregunta;
-select * from correlativo;
 
+update correlativo
+set numero = 79
+where
+	tabla = 'pregunta';
 
 CREATE OR REPLACE FUNCTION fn_insert_log_pregunta
 											(
@@ -1691,7 +1723,8 @@ CREATE OR REPLACE FUNCTION fn_insert_log_pregunta
 											p_alternativa4 character varying(500),
 											p_respuesta character varying(500),
 											p_prueba_id int,
-											p_tipo_operacion character varying(100)
+											p_tipo_operacion character varying(100),
+											p_ip character varying(200)
 											)returns void as
 $$
 declare
@@ -1718,7 +1751,8 @@ begin
 											alternativa4,
 											respuesta,
 											prueba_id,
-											tipo_operacion
+											tipo_operacion,
+											ip
 										)
 									values (
 												p_doc_id_log, 
@@ -1736,7 +1770,8 @@ begin
 												p_alternativa4,
 												p_respuesta,
 												p_prueba_id,
-												p_tipo_operacion
+												p_tipo_operacion,
+												p_ip
 											); 
 										
 end
@@ -1762,16 +1797,12 @@ select * from fn_insert_log_pregunta
 
 
 
-select * from log_curso
+select * from credenciales_Acceso;
 
+update 
+	credenciales_Acceso
+set 
+	tipo = 'S'
+where 
+	doc_id = '45977448'; 
 
-
-create function SP_TR_Insert() returns trigger as 
-$$
-declare
-
-begin
-		insert into log_curso
-		values(old.doc_id, old.nombres, old.apellidos);
-$$
-end plpgsql;
