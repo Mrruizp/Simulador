@@ -1553,7 +1553,7 @@ end
 $$ language plpgsql;
 
 -- Función para insertar, actualizar o eliminar log usuario
--- _log <-- usuario responsable de haber realizado la operación.
+-- _log <-- curso responsable de haber realizado la operación.
 
 select * from log_curso;
 
@@ -1606,7 +1606,7 @@ end
 $$ language plpgsql;
 
 -- Función para insertar, actualizar o eliminar log prueba
--- _log <-- usuario responsable de haber realizado la operación.
+-- _log <-- prueba responsable de haber realizado la operación.
 
 select * from log_prueba;
 select * from correlativo;
@@ -1669,19 +1669,95 @@ begin
 end
 $$ language plpgsql;
 
-select * from fn_insert_log_prueba
+-- Función para insertar, actualizar o eliminar log prueba
+-- _log <-- prueba responsable de haber realizado la operación.
+
+select * from log_pregunta;
+select * from correlativo;
+
+
+CREATE OR REPLACE FUNCTION fn_insert_log_pregunta
+											(
+											p_doc_id_log character varying(20), 
+											p_nombres_log character varying(50),
+											p_apellidos_log character varying(50), 
+											p_cargo_id_log int, 
+											p_tipo_log char(1), 
+											p_pregunta_id int,
+											p_nombre_pregunta character varying(1200),
+											p_alternativa1 character varying(500),
+											p_alternativa2 character varying(500),
+											p_alternativa3 character varying(500),
+											p_alternativa4 character varying(500),
+											p_respuesta character varying(500),
+											p_prueba_id int,
+											p_tipo_operacion character varying(100)
+											)returns void as
+$$
+declare
+	p_fecha character varying(50)  := current_date;
+	p_tiempo character varying(50) := current_time;
+begin
+							
+							-- if estado = 0 then
+							
+								insert into log_pregunta
+										(
+											usuarioqueregistra_doc_id, 
+											usuarioqueregistra_nombres,
+											usuarioqueregistra_apellidos, 
+											usuarioqueregistra_cargo_id, 
+											usuarioqueregistra_tipo,
+											fecha,
+											tiempo,
+											pregunta_id,
+											nombre_pregunta,
+											alternativa1,
+											alternativa2,
+											alternativa3,
+											alternativa4,
+											respuesta,
+											prueba_id,
+											tipo_operacion
+										)
+									values (
+												p_doc_id_log, 
+												p_nombres_log,
+												p_apellidos_log, 
+												p_cargo_id_log, 
+												p_tipo_log,
+												p_fecha,
+												p_tiempo,
+												p_pregunta_id,
+												p_nombre_pregunta,
+												p_alternativa1,
+												p_alternativa2,
+												p_alternativa3,
+												p_alternativa4,
+												p_respuesta,
+												p_prueba_id,
+												p_tipo_operacion
+											); 
+										
+end
+$$ language plpgsql;
+
+select * from fn_insert_log_pregunta
                                     (
                                         '12345678', 
 										'Maria',
 										'Trinida Asustaa', 
 										 2, 
 										'A',
+										1,
+										'bebecitas lindas',
+										'holis1',
+										'holis2',
+										'holis3',
+										'holis4',
+										'holis1',
 										22,
-										'40',
-										'6m',
-										60,
-										22,
-										'Update'
+										'Insert'
                                     );
 
 

@@ -1,7 +1,8 @@
 <?php
 
 require_once '../data/Conexion.class.php';
-
+session_name("CampusVirtual");
+session_start();
 class Pregunta extends Conexion {
 
     private $Pregunta_id;
@@ -104,8 +105,8 @@ class Pregunta extends Conexion {
     }
 
     public function listarPreguntaDocente() {
-        session_name("CampusVirtual");
-                        session_start();
+        //session_name("CampusVirtual");
+        //              session_start();
         try {
             $sql = "
                     select 
@@ -173,6 +174,36 @@ class Pregunta extends Conexion {
                                     :p_alternativa3,
                                     :p_alternativa4
                                     );
+
+                    ";
+                $sentencia = $this->dblink->prepare($sql);
+                $sentencia->bindParam(":p_pregunta_id", $this->getPregunta_id());
+                $sentencia->bindParam(":p_nombre_pregunta", $this->getNombre_pregunta());
+                $sentencia->bindParam(":p_respuesta", $this->getRespuesta());
+                $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+                $sentencia->bindParam(":p_alternativa1", $this->getAlternativa1());
+                $sentencia->bindParam(":p_alternativa2", $this->getAlternativa2());
+                $sentencia->bindParam(":p_alternativa3", $this->getAlternativa3());
+                $sentencia->bindParam(":p_alternativa4", $this->getAlternativa4());
+                $sentencia->execute();
+
+                $sql = "
+                    select * from fn_insert_log_pregunta(
+                                                '$_SESSION[s_doc_id]',
+                                                '$_SESSION[s_usuario]',
+                                                '$_SESSION[s_apellidos]',
+                                                $_SESSION[cargo_id],
+                                                '$_SESSION[tipo]',
+                                                :p_pregunta_id,
+                                                :p_nombre_pregunta,
+                                                :p_alternativa1,
+                                                :p_alternativa2,
+                                                :p_alternativa3,
+                                                :p_alternativa4,
+                                                :p_respuesta,
+                                                :p_prueba_id,
+                                                'Insert'
+                                                );
 
                     ";
                 $sentencia = $this->dblink->prepare($sql);
@@ -256,6 +287,36 @@ class Pregunta extends Conexion {
             $sentencia->bindParam(":p_alternativa3", $this->getAlternativa3());
             $sentencia->bindParam(":p_alternativa4", $this->getAlternativa4());
             $sentencia->execute();
+
+            $sql = "
+                select * from fn_insert_log_pregunta(
+                                                '$_SESSION[s_doc_id]',
+                                                '$_SESSION[s_usuario]',
+                                                '$_SESSION[s_apellidos]',
+                                                $_SESSION[cargo_id],
+                                                '$_SESSION[tipo]',
+                                                :p_pregunta_id,
+                                                :p_nombre_pregunta,
+                                                :p_alternativa1,
+                                                :p_alternativa2,
+                                                :p_alternativa3,
+                                                :p_alternativa4,
+                                                :p_respuesta,
+                                                :p_prueba_id,
+                                                'Update'
+                                                );
+
+                    ";
+            $sentencia = $this->dblink->prepare($sql);
+            $sentencia->bindParam(":p_pregunta_id", $this->getPregunta_id());
+            $sentencia->bindParam(":p_nombre_pregunta", $this->getNombre_pregunta());
+            $sentencia->bindParam(":p_respuesta", $this->getRespuesta());
+            $sentencia->bindParam(":p_prueba_id", $this->getPrueba_id());
+            $sentencia->bindParam(":p_alternativa1", $this->getAlternativa1());
+            $sentencia->bindParam(":p_alternativa2", $this->getAlternativa2());
+            $sentencia->bindParam(":p_alternativa3", $this->getAlternativa3());
+            $sentencia->bindParam(":p_alternativa4", $this->getAlternativa4());
+            $sentencia->execute();
             return true;
         } catch (Exception $exc) {
             throw $exc;
@@ -270,6 +331,28 @@ class Pregunta extends Conexion {
                     pregunta 
                 where
                     pregunta_id = :p_pregunta_id
+                ";
+            $sentencia = $this->dblink->prepare($sql);
+            $sentencia->bindParam(":p_pregunta_id", $this->getPregunta_id());
+            $sentencia->execute();
+
+            $sql = "
+                select * from fn_insert_log_pregunta(
+                                                '$_SESSION[s_doc_id]',
+                                                '$_SESSION[s_usuario]',
+                                                '$_SESSION[s_apellidos]',
+                                                $_SESSION[cargo_id],
+                                                '$_SESSION[tipo]',
+                                                :p_pregunta_id,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                'Delete'
+                                                );
                 ";
             $sentencia = $this->dblink->prepare($sql);
             $sentencia->bindParam(":p_pregunta_id", $this->getPregunta_id());
